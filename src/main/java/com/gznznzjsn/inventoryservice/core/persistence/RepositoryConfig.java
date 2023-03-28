@@ -1,6 +1,10 @@
 package com.gznznzjsn.inventoryservice.core.persistence;
 
 
+import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequirementReadConverter;
+import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequirementWriteConverter;
+import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentReadConverter;
+import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentWriteConverter;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.axonframework.config.EventProcessingConfigurer;
@@ -22,7 +26,10 @@ public class RepositoryConfig {
     @Bean
     public R2dbcCustomConversions customConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
-
+        converters.add(new EmployeeRequirementReadConverter());
+        converters.add(new EmployeeRequirementWriteConverter());
+        converters.add(new EquipmentReadConverter());
+        converters.add(new EquipmentWriteConverter());
         return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, converters);
     }
 

@@ -95,7 +95,6 @@
             <groupId>cpm.gznznzjsn</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     <dependencyManagement>
