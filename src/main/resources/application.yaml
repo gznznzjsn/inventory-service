@@ -1,8 +1,29 @@
 spring:
   application:
     name: inventory-service
+  data:
+    mongodb:
+      authentication-database: ${SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE}
+      username: ${SPRING_DATA_MONGODB_USERNAME}
+      password: ${SPRING_DATA_MONGODB_PASSWORD}
+      port: ${SPRING_DATA_MONGODB_PORT}
+      database: ${SPRING_DATA_MONGODB_DATABASE}
+      host: ${SPRING_DATA_MONGODB_HOST}
+  jackson:
+    default-property-inclusion: NON_NULL
   config:
     import: optional:.env[.properties]
+  r2dbc:
+    url: ${SPRING_R2DBC_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    default-schema: ${SPRING_LIQUIBASE_DEFAULT-SCHEMA}
+    url: ${SPRING_JDBC_URL}
+server:
+  port: 2324
 
 eureka:
   client:
@@ -11,5 +32,8 @@ eureka:
   instance:
     prefer-ip-address: true
 
-server:
-  port: 0
+axon:
+  serializer:
+    general: jackson
+    events: jackson
+    messages: jackson
