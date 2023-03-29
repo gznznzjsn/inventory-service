@@ -5,11 +5,17 @@ import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequire
 import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequirementWriteConverter;
 import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentReadConverter;
 import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentWriteConverter;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.security.AnyTypePermission;
+import com.mongodb.client.MongoClient;
 import org.axonframework.config.EventProcessingConfigurer;
 import org.axonframework.eventhandling.TrackingEventProcessorConfiguration;
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
+import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
+import org.axonframework.eventsourcing.eventstore.EventStore;
+import org.axonframework.extensions.mongo.DefaultMongoTemplate;
+import org.axonframework.extensions.mongo.eventsourcing.eventstore.MongoEventStorageEngine;
 import org.axonframework.messaging.StreamableMessageSource;
+import org.axonframework.serialization.json.JacksonSerializer;
+import org.axonframework.spring.config.SpringAxonConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,10 +48,21 @@ public class RepositoryConfig {
     }
 
     @Bean
-    public XStream xStream() {
-        XStream xStream = new XStream();
-        xStream.addPermission(AnyTypePermission.ANY);
-        return xStream;
+    public EventStorageEngine storageEngine(MongoClient client) {
+        return MongoEventStorageEngine.builder()
+                .mongoTemplate(DefaultMongoTemplate.builder().mongoDatabase(client).build())
+                .eventSerializer(JacksonSerializer.defaultSerializer())
+                .snapshotSerializer(JacksonSerializer.defaultSerializer())
+                .build();
+    }
+
+    @Bean
+    public EmbeddedEventStore eventStore(EventStorageEngine storageEngine, SpringAxonConfiguration configuration) {
+        return EmbeddedEventStore.builder()
+                .storageEngine(storageEngine)
+                .messageMonitor(configuration.getObject().messageMonitor(EventStore.class,
+                        "eventStore"))
+                .build();
     }
 
 }

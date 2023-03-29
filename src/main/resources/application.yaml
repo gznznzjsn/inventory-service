@@ -1,6 +1,14 @@
 spring:
   application:
     name: inventory-service
+  data:
+    mongodb:
+      authentication-database: ${SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE}
+      username: ${SPRING_DATA_MONGODB_USERNAME}
+      password: ${SPRING_DATA_MONGODB_PASSWORD}
+      port: ${SPRING_DATA_MONGODB_PORT}
+      database: ${SPRING_DATA_MONGODB_DATABASE}
+      host: ${SPRING_DATA_MONGODB_HOST}
   jackson:
     default-property-inclusion: NON_NULL
   config:
@@ -23,3 +31,9 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_SERVICE-URL}
   instance:
     prefer-ip-address: true
+
+axon:
+  serializer:
+    general: jackson
+    events: jackson
+    messages: jackson
