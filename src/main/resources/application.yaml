@@ -23,17 +23,12 @@ spring:
     default-schema: ${SPRING_LIQUIBASE_DEFAULT-SCHEMA}
     url: ${SPRING_JDBC_URL}
 server:
-  port: 2324
-
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICE-URL}
-  instance:
-    prefer-ip-address: true
+  port: 8080
 
 axon:
   serializer:
     general: jackson
     events: jackson
     messages: jackson
+  axonserver:
+    servers: ${AXON_AXONSERVER_SERVERS}
