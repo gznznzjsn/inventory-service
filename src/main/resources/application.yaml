@@ -7,7 +7,6 @@ spring:
       username: ${SPRING_DATA_MONGODB_USERNAME}
       password: ${SPRING_DATA_MONGODB_PASSWORD}
       port: ${SPRING_DATA_MONGODB_PORT}
-      database: ${SPRING_DATA_MONGODB_DATABASE}
       host: ${SPRING_DATA_MONGODB_HOST}
   jackson:
     default-property-inclusion: NON_NULL
@@ -20,20 +19,16 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
-    default-schema: ${SPRING_LIQUIBASE_DEFAULT-SCHEMA}
     url: ${SPRING_JDBC_URL}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    user: ${SPRING_DATASOURCE_USERNAME}
 server:
-  port: 2324
-
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICE-URL}
-  instance:
-    prefer-ip-address: true
+  port: 8080
 
 axon:
   serializer:
     general: jackson
     events: jackson
     messages: jackson
+  axonserver:
+    servers: ${AXON_AXONSERVER_SERVERS}
