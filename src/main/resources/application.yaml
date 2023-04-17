@@ -3,25 +3,25 @@ spring:
     name: inventory-service
   data:
     mongodb:
-      authentication-database: ${SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE}
-      username: ${SPRING_DATA_MONGODB_USERNAME}
-      password: ${SPRING_DATA_MONGODB_PASSWORD}
-      port: ${SPRING_DATA_MONGODB_PORT}
-      host: ${SPRING_DATA_MONGODB_HOST}
+      authentication-database: ${APP_DATA_MONGODB_AUTHENTICATION-DATABASE}
+      username: ${APP_DATA_MONGODB_USERNAME}
+      password: ${APP_DATA_MONGODB_PASSWORD}
+      port: ${APP_DATA_MONGODB_PORT}
+      host: ${APP_DATA_MONGODB_HOST}
   jackson:
     default-property-inclusion: NON_NULL
   config:
     import: optional:.env[.properties]
   r2dbc:
-    url: ${SPRING_R2DBC_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${APP_R2DBC_URL}
+    username: ${APP_DATASOURCE_USERNAME}
+    password: ${APP_DATASOURCE_PASSWORD}
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
-    url: ${SPRING_JDBC_URL}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    user: ${SPRING_DATASOURCE_USERNAME}
+    url: ${APP_JDBC_URL}
+    password: ${APP_DATASOURCE_PASSWORD}
+    user: ${APP_DATASOURCE_USERNAME}
 server:
   port: 8080
 
