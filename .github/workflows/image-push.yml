@@ -19,7 +19,7 @@ jobs:
     - name: Validate XML
       uses: g4s8/xcop-action@master
       with:
-        license: LICENSE.txt
+        license: LICENSE
         files: "**/*.xml"
     - name: Build with Maven
       run: mvn clean package --file pom.xml
