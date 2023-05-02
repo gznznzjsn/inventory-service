@@ -9,9 +9,7 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-22.04
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -37,7 +35,6 @@ jobs:
     runs-on:
       - self-hosted
       - k8s-api
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -49,3 +46,21 @@ jobs:
           wget https://dl.k8s.io/release/v1.26.0/bin/linux/arm64/kubectl
           chmod +x ./kubectl
           ~/kubectl rollout restart deployment inventory-service -n default
+
+  xml-validation:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: g4s8/xcop-action@master
+
+  checkstyle:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Validation
+        run: mvn clean validate --file pom.xml
+
