@@ -4,7 +4,6 @@ package com.gznznzjsn.inventoryservice.commandapi.controller;
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.service.InventoryCmdService;
 import lombok.RequiredArgsConstructor;
-import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
