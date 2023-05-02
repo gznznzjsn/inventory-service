@@ -1,7 +1,7 @@
 package com.gznznzjsn.inventoryservice.commandapi.service.impl;
 
-import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
-import com.gznznzjsn.inventoryservice.commandapi.service.EquipmentCommandService;
+import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.service.InventoryCmdService;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class EquipmentCommandServiceImpl implements EquipmentCommandService {
+public class InventoryCmdServiceImpl implements InventoryCmdService {
 
     private final ReactorCommandGateway commandGateway;
 
     @Override
-    public Mono<UUID> create(EquipmentCreateCommand command) {
+    public Mono<UUID> create(final InventoryCreateCommand command) {
         return commandGateway.send(command);
     }
 

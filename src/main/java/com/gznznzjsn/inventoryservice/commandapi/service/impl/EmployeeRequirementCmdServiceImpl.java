@@ -1,7 +1,7 @@
 package com.gznznzjsn.inventoryservice.commandapi.service.impl;
 
 import com.gznznzjsn.inventoryservice.commandapi.command.EmployeeRequirementCreateCommand;
-import com.gznznzjsn.inventoryservice.commandapi.service.EmployeeRequirementCommandService;
+import com.gznznzjsn.inventoryservice.commandapi.service.EmployeeRequirementCmdService;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.extensions.reactor.commandhandling.gateway.ReactorCommandGateway;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeRequirementCommandServiceImpl implements EmployeeRequirementCommandService {
+public class EmployeeRequirementCmdServiceImpl
+        implements EmployeeRequirementCmdService {
 
     private final ReactorCommandGateway commandGateway;
 
     @Override
-    public Mono<UUID> create(EmployeeRequirementCreateCommand command) {
+    public Mono<UUID> create(final EmployeeRequirementCreateCommand command) {
         return commandGateway.send(command);
     }
 

@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-public interface EquipmentCommandService {
+public interface EquipmentCmdService {
 
     Mono<UUID> create(EquipmentCreateCommand command);
 

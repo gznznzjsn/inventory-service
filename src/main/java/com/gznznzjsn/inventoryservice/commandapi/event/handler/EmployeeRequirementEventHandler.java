@@ -16,7 +16,7 @@ public class EmployeeRequirementEventHandler {
     private final EmployeeRequirementRepository repository;
 
     @EventHandler
-    public void on(EmployeeRequirementCreatedEvent event) {
+    public void on(final EmployeeRequirementCreatedEvent event) {
         Mono.just(event)
                 .flatMap(e -> repository.save(EmployeeRequirement.builder()
                         .id(e.getEmployeeRequirementId())

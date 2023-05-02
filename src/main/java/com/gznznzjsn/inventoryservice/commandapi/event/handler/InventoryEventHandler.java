@@ -16,7 +16,7 @@ public class InventoryEventHandler {
     private final InventoryRepository repository;
 
     @EventHandler
-    public void on(InventoryCreatedEvent event) {
+    public void on(final InventoryCreatedEvent event) {
         Mono.just(event)
                 .flatMap(e -> repository.save(Inventory.builder()
                         .id(event.getInventoryId())

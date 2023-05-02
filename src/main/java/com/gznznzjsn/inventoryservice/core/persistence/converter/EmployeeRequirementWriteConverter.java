@@ -7,22 +7,38 @@ import org.springframework.data.r2dbc.mapping.OutboundRow;
 import org.springframework.r2dbc.core.Parameter;
 
 @WritingConverter
-public class EmployeeRequirementWriteConverter implements Converter<EmployeeRequirement, OutboundRow> {
+public class EmployeeRequirementWriteConverter
+        implements Converter<EmployeeRequirement, OutboundRow> {
 
     @Override
-    public OutboundRow convert(EmployeeRequirement employeeRequirement) {
+    public OutboundRow convert(final EmployeeRequirement employeeRequirement) {
         OutboundRow row = new OutboundRow();
         if (employeeRequirement.getId() != null) {
-            row.put("employee_requirement_id", Parameter.from(employeeRequirement.getId()));
+            row.put(
+                    "employee_requirement_id",
+                    Parameter.from(employeeRequirement.getId())
+            );
         }
-        if (employeeRequirement.getInventory() != null && employeeRequirement.getInventory().getId() != null) {
-            row.put("inventory_id", Parameter.from(employeeRequirement.getInventory().getId()));
+        if (
+                employeeRequirement.getInventory() != null
+                && employeeRequirement.getInventory().getId() != null
+        ) {
+            row.put(
+                    "inventory_id",
+                    Parameter.from(employeeRequirement.getInventory().getId())
+            );
         }
         if (employeeRequirement.getSpecialization() != null) {
-            row.put("specialization", Parameter.from(employeeRequirement.getSpecialization()));
+            row.put(
+                    "specialization",
+                    Parameter.from(employeeRequirement.getSpecialization())
+            );
         }
         if (employeeRequirement.getEquipmentName() != null) {
-            row.put("equipment_name", Parameter.from(employeeRequirement.getEquipmentName()));
+            row.put(
+                    "equipment_name",
+                    Parameter.from(employeeRequirement.getEquipmentName())
+            );
         }
         return row;
     }

@@ -7,22 +7,37 @@ import org.springframework.data.r2dbc.mapping.OutboundRow;
 import org.springframework.r2dbc.core.Parameter;
 
 @WritingConverter
-public class EquipmentWriteConverter implements Converter<Equipment, OutboundRow> {
+public class EquipmentWriteConverter
+        implements Converter<Equipment, OutboundRow> {
 
     @Override
-    public OutboundRow convert(Equipment equipment) {
+    public OutboundRow convert(final Equipment equipment) {
         OutboundRow row = new OutboundRow();
         if (equipment.getId() != null) {
-            row.put("equipment_id", Parameter.from(equipment.getId()));
+            row.put(
+                    "equipment_id",
+                    Parameter.from(equipment.getId())
+            );
         }
-        if (equipment.getInventory() != null && equipment.getInventory().getId() != null) {
-            row.put("inventory_id", Parameter.from(equipment.getInventory().getId()));
+        if (equipment.getInventory() != null
+            && equipment.getInventory().getId() != null) {
+            row.put(
+                    "inventory_id",
+                    Parameter.from(equipment.getInventory().getId())
+            );
         }
         if (equipment.getEquipmentName() != null) {
-            row.put("equipment_name", Parameter.from(equipment.getEquipmentName()));
+            row.put(
+                    "equipment_name",
+                    Parameter.from(equipment.getEquipmentName())
+            );
         }
-        if (equipment.getOwner() != null && equipment.getOwner().getId() != null) {
-            row.put("owner_id", Parameter.from(equipment.getOwner().getId()));
+        if (equipment.getOwner() != null
+            && equipment.getOwner().getId() != null) {
+            row.put(
+                    "owner_id",
+                    Parameter.from(equipment.getOwner().getId())
+            );
         }
         return row;
     }

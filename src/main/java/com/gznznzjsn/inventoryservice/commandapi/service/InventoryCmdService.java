@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-public interface InventoryCommandService {
+public interface InventoryCmdService {
 
     Mono<UUID> create(InventoryCreateCommand command);
 

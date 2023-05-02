@@ -14,7 +14,7 @@ import java.util.UUID;
 public class EquipmentReadConverter implements Converter<Row, Equipment> {
 
     @Override
-    public Equipment convert(Row source) {
+    public Equipment convert(final Row source) {
         return Equipment.builder()
                 .id(source.get("equipment_id", UUID.class))
                 .inventory(Inventory.builder()

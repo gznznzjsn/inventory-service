@@ -40,28 +40,44 @@ public class RepositoryConfig {
     }
 
     @Autowired
-    public void configureInitialTrackingToken(EventProcessingConfigurer processingConfigurer) {
+    public void configureInitialTrackingToken(
+            final EventProcessingConfigurer processingConfigurer
+    ) {
         TrackingEventProcessorConfiguration tepConfig =
-                TrackingEventProcessorConfiguration.forSingleThreadedProcessing()
-                        .andInitialTrackingToken(StreamableMessageSource::createHeadToken);
-        processingConfigurer.registerTrackingEventProcessorConfiguration(config -> tepConfig);
+                TrackingEventProcessorConfiguration
+                        .forSingleThreadedProcessing()
+                        .andInitialTrackingToken(
+                                StreamableMessageSource::createHeadToken
+                        );
+        processingConfigurer.registerTrackingEventProcessorConfiguration(
+                config -> tepConfig
+        );
     }
 
     @Bean
-    public EventStorageEngine storageEngine(MongoClient client) {
+    public EventStorageEngine storageEngine(final MongoClient client) {
         return MongoEventStorageEngine.builder()
-                .mongoTemplate(DefaultMongoTemplate.builder().mongoDatabase(client).build())
+                .mongoTemplate(
+                        DefaultMongoTemplate.builder()
+                                .mongoDatabase(client)
+                                .build()
+                )
                 .eventSerializer(JacksonSerializer.defaultSerializer())
                 .snapshotSerializer(JacksonSerializer.defaultSerializer())
                 .build();
     }
 
     @Bean
-    public EmbeddedEventStore eventStore(EventStorageEngine storageEngine, SpringAxonConfiguration configuration) {
+    public EmbeddedEventStore eventStore(
+            final EventStorageEngine storageEngine,
+            final SpringAxonConfiguration configuration
+    ) {
         return EmbeddedEventStore.builder()
                 .storageEngine(storageEngine)
-                .messageMonitor(configuration.getObject().messageMonitor(EventStore.class,
-                        "eventStore"))
+                .messageMonitor(configuration.getObject().messageMonitor(
+                        EventStore.class,
+                        "eventStore"
+                ))
                 .build();
     }
 

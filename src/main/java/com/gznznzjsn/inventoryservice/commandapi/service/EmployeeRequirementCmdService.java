@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-public interface EmployeeRequirementCommandService {
+public interface EmployeeRequirementCmdService {
 
     Mono<UUID> create(EmployeeRequirementCreateCommand command);
 

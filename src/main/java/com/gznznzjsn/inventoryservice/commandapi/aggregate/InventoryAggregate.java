@@ -38,14 +38,14 @@ public class InventoryAggregate {
     private Map<UUID, EquipmentEntity> equipmentMap;
 
     @CommandHandler
-    public InventoryAggregate(InventoryCreateCommand command) {
+    public InventoryAggregate(final InventoryCreateCommand command) {
         AggregateLifecycle.apply(new InventoryCreatedEvent(
                 UUID.randomUUID()
         ));
     }
 
     @CommandHandler
-    public void handle(EmployeeRequirementCreateCommand command) {
+    public void handle(final EmployeeRequirementCreateCommand command) {
         AggregateLifecycle.apply(new EmployeeRequirementCreatedEvent(
                 this.inventoryId,
                 UUID.randomUUID(),
@@ -55,7 +55,7 @@ public class InventoryAggregate {
     }
 
     @CommandHandler
-    public void handle(EquipmentCreateCommand command) {
+    public void handle(final EquipmentCreateCommand command) {
         AggregateLifecycle.apply(new EquipmentCreatedEvent(
                 this.inventoryId,
                 UUID.randomUUID(),
@@ -65,8 +65,10 @@ public class InventoryAggregate {
     }
 
     @CommandHandler
-    public void handle(EquipmentAssignCommand command) {
-        checkEquipmentAvailability(Specialization.valueOf(command.getSpecialization()));
+    public void handle(final EquipmentAssignCommand command) {
+        checkEquipmentAvailability(Specialization.valueOf(
+                command.getSpecialization()
+        ));
         AggregateLifecycle.apply(new EquipmentAssignedEvent(
                 command.getOwnerId(),
                 command.getSpecialization()
@@ -74,14 +76,14 @@ public class InventoryAggregate {
     }
 
     @EventSourcingHandler
-    public void on(InventoryCreatedEvent event) {
+    public void on(final InventoryCreatedEvent event) {
         this.inventoryId = event.getInventoryId();
         this.employeeRequirementMap = new HashMap<>();
         this.equipmentMap = new HashMap<>();
     }
 
     @EventSourcingHandler
-    public void on(EmployeeRequirementCreatedEvent event) {
+    public void on(final EmployeeRequirementCreatedEvent event) {
         this.employeeRequirementMap.put(
                 event.getEmployeeRequirementId(),
                 new EmployeeRequirementEntity(
@@ -93,7 +95,7 @@ public class InventoryAggregate {
     }
 
     @EventSourcingHandler
-    public void on(EquipmentCreatedEvent event) {
+    public void on(final EquipmentCreatedEvent event) {
         this.equipmentMap.put(
                 event.getEquipmentId(),
                 new EquipmentEntity(
@@ -105,14 +107,18 @@ public class InventoryAggregate {
     }
 
     @EventSourcingHandler
-    public void on(EquipmentAssignedEvent event) {
+    public void on(final EquipmentAssignedEvent event) {
         List<EmployeeRequirementEntity> requirements = employeeRequirementMap
                 .values().stream()
                 .filter(r -> r.getSpecialization().toString()
                         .equals(event.getSpecialization())).toList();
         List<EquipmentEntity> equipment = equipmentMap.values()
                 .stream().toList();
-        for (int i = 0, j = 0; i < requirements.size() && j < equipment.size(); i++) {
+        for (
+                int i = 0, j = 0;
+                i < requirements.size() && j < equipment.size();
+                i++
+        ) {
             while (!requirements.get(i).getEquipmentName()
                     .equals(equipment.get(j).getEquipmentName())
                    || equipment.get(j).getOwnerId() != null) {
@@ -128,17 +134,23 @@ public class InventoryAggregate {
 
     }
 
-    private void checkEquipmentAvailability(Specialization specialization) {
+    private void checkEquipmentAvailability(
+            final Specialization specialization
+    ) {
         employeeRequirementMap.values().stream()
                 .filter(r -> r.getSpecialization()
                         .equals(specialization))
                 .forEach(r -> {
-                    if (equipmentMap.values().stream()
+                    if (equipmentMap.values()
+                            .stream()
                             .noneMatch(
-                                    e -> e.getEquipmentName().equals(r.getEquipmentName())
+                                    e -> e.getEquipmentName()
+                                                 .equals(r.getEquipmentName())
                                          && e.getOwnerId() == null)
                     ) {
-                        throw new NotEnoughResourcesException("Not enough equipment for " + specialization);
+                        throw new NotEnoughResourcesException(
+                                "Not enough equipment for " + specialization
+                        );
                     }
                 });
     }

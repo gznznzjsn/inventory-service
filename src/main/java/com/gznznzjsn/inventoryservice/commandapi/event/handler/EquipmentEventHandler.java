@@ -21,7 +21,7 @@ public class EquipmentEventHandler {
     private final EquipmentRepository repository;
 
     @EventHandler
-    public void on(EquipmentCreatedEvent event) {
+    public void on(final EquipmentCreatedEvent event) {
         Mono.just(event)
                 .flatMap(e -> repository.save(Equipment.builder()
                         .id(e.getEquipmentId())
@@ -38,7 +38,7 @@ public class EquipmentEventHandler {
     }
 
     @EventHandler
-    public void on(EquipmentOwnerAddedEvent event) {
+    public void on(final EquipmentOwnerAddedEvent event) {
         get(event.getEquipmentId())
                 .map(equipmentFromRepository -> {
                     if (event.getOwnerId() != null) {
@@ -52,11 +52,13 @@ public class EquipmentEventHandler {
                 .subscribe();
     }
 
-    public Mono<Equipment> get(UUID equipmentId) {
+    public Mono<Equipment> get(final UUID equipmentId) {
         return repository.findById(equipmentId)
                 .switchIfEmpty(Mono.error(
                         new ResourceNotFoundException(
-                                "Equipment with id = " + equipmentId + " not found!"
+                                "Equipment with id = "
+                                + equipmentId
+                                + " not found!"
                         ))
                 );
     }
