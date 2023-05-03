@@ -154,7 +154,6 @@ SOFTWARE.
         <version>3.2.2</version>
         <configuration>
           <configLocation>sun_checks.xml</configLocation>
-          <encoding>UTF-8</encoding>
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
           <linkXRef>false</linkXRef>
