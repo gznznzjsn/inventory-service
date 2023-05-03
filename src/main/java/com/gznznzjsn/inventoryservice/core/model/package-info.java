@@ -1,5 +1,4 @@
 /**
- * com.gznznzjsn.inventoryservice.core.model
- * is a group of models for inventory-service.
+ * Group of models for service.
  */
 package com.gznznzjsn.inventoryservice.core.model;

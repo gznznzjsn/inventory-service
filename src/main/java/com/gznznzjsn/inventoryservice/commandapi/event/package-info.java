@@ -1,5 +1,4 @@
 /**
- * com.gznznzjsn.inventoryservice.commandapi.event
- * is a group of events.
+ * Group of events.
  */
 package com.gznznzjsn.inventoryservice.commandapi.event;

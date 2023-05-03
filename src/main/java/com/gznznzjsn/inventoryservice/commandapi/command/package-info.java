@@ -1,5 +1,4 @@
 /**
- * com.gznznzjsn.inventoryservice.commandapi.command
- * is a group of commands.
+ * Group of commands.
  */
 package com.gznznzjsn.inventoryservice.commandapi.command;

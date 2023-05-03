@@ -1,5 +1,4 @@
 /**
- * com.gznznzjsn.inventoryservice
- * is a base package of inventory-service.
+ * Base package of service.
  */
 package com.gznznzjsn.inventoryservice;
