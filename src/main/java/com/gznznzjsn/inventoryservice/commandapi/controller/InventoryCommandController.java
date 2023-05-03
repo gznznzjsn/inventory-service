@@ -16,11 +16,11 @@ import java.util.UUID;
 @RequestMapping("/inventory-api/v1/inventories")
 public class InventoryCommandController {
 
-    private final InventoryCmdService inventoryCmdService;
+    private final InventoryCmdService inventoryService;
 
     @PostMapping
     public Mono<UUID> create() {
-        return inventoryCmdService.create(new InventoryCreateCommand());
+        return inventoryService.create(new InventoryCreateCommand());
     }
 
 }

@@ -11,33 +11,33 @@ public class EmployeeRequirementWriteConverter
         implements Converter<EmployeeRequirement, OutboundRow> {
 
     @Override
-    public OutboundRow convert(final EmployeeRequirement employeeRequirement) {
+    public OutboundRow convert(final EmployeeRequirement requirement) {
         OutboundRow row = new OutboundRow();
-        if (employeeRequirement.getId() != null) {
+        if (requirement.getId() != null) {
             row.put(
                     "employee_requirement_id",
-                    Parameter.from(employeeRequirement.getId())
+                    Parameter.from(requirement.getId())
             );
         }
         if (
-                employeeRequirement.getInventory() != null
-                && employeeRequirement.getInventory().getId() != null
+                requirement.getInventory() != null
+                && requirement.getInventory().getId() != null
         ) {
             row.put(
                     "inventory_id",
-                    Parameter.from(employeeRequirement.getInventory().getId())
+                    Parameter.from(requirement.getInventory().getId())
             );
         }
-        if (employeeRequirement.getSpecialization() != null) {
+        if (requirement.getSpecialization() != null) {
             row.put(
                     "specialization",
-                    Parameter.from(employeeRequirement.getSpecialization())
+                    Parameter.from(requirement.getSpecialization())
             );
         }
-        if (employeeRequirement.getEquipmentName() != null) {
+        if (requirement.getName() != null) {
             row.put(
                     "equipment_name",
-                    Parameter.from(employeeRequirement.getEquipmentName())
+                    Parameter.from(requirement.getName())
             );
         }
         return row;

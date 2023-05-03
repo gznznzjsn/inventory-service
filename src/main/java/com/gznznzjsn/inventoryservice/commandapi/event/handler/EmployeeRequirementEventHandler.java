@@ -19,11 +19,11 @@ public class EmployeeRequirementEventHandler {
     public void on(final EmployeeRequirementCreatedEvent event) {
         Mono.just(event)
                 .flatMap(e -> repository.save(EmployeeRequirement.builder()
-                        .id(e.getEmployeeRequirementId())
+                        .id(e.getRequirementId())
                         .inventory(Inventory.builder()
                                 .id(e.getInventoryId())
                                 .build())
-                        .equipmentName(e.getEquipmentName())
+                        .name(e.getName())
                         .specialization(e.getSpecialization())
                         .isNew(true)
                         .build()))

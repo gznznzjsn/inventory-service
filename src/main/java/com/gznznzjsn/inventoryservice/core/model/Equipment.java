@@ -23,7 +23,7 @@ public class Equipment implements Persistable<UUID> {
     @Column("equipment_id")
     private UUID id;
     private Inventory inventory;
-    private String equipmentName;
+    private String name;
     private Employee owner;
 
     @Transient

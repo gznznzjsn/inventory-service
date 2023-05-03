@@ -31,7 +31,7 @@ public class EquipmentEventHandler {
                         .inventory(Inventory.builder()
                                 .id(e.getInventoryId())
                                 .build())
-                        .equipmentName(e.getEquipmentName())
+                        .name(e.getName())
                         .isNew(true)
                         .build()))
                 .subscribe();

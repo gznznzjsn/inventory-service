@@ -25,7 +25,7 @@ public class EmployeeRequirementReadConverter
                 .specialization(Specialization
                         .valueOf(source.get("specialization", String.class))
                 )
-                .equipmentName(source.get("equipment_name", String.class))
+                .name(source.get("equipment_name", String.class))
                 .build();
     }
 

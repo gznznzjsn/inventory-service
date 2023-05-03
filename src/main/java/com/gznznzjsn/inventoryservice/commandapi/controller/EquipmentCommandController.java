@@ -19,17 +19,17 @@ import java.util.UUID;
 @RequestMapping("/inventory-api/v1/inventories/{inventoryId}/equipment")
 public class EquipmentCommandController {
 
-    private final EquipmentCmdService equipmentCmdService;
+    private final EquipmentCmdService equipmentService;
 
     @PostMapping
     public Mono<UUID> create(
-            final @RequestBody EquipmentDto equipmentDto,
+            final @RequestBody EquipmentDto dto,
             final @PathVariable UUID inventoryId
     ) {
-        return equipmentCmdService.create(
+        return equipmentService.create(
                 new EquipmentCreateCommand(
                         inventoryId,
-                        equipmentDto.equipmentName()
+                        dto.name()
                 )
         );
     }

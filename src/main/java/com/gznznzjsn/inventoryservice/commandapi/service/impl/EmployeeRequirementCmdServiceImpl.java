@@ -14,11 +14,11 @@ import java.util.UUID;
 public class EmployeeRequirementCmdServiceImpl
         implements EmployeeRequirementCmdService {
 
-    private final ReactorCommandGateway commandGateway;
+    private final ReactorCommandGateway gateway;
 
     @Override
     public Mono<UUID> create(final EmployeeRequirementCreateCommand command) {
-        return commandGateway.send(command);
+        return gateway.send(command);
     }
 
 }

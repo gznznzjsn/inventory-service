@@ -26,10 +26,10 @@ public class EquipmentWriteConverter
                     Parameter.from(equipment.getInventory().getId())
             );
         }
-        if (equipment.getEquipmentName() != null) {
+        if (equipment.getName() != null) {
             row.put(
                     "equipment_name",
-                    Parameter.from(equipment.getEquipmentName())
+                    Parameter.from(equipment.getName())
             );
         }
         if (equipment.getOwner() != null

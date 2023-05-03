@@ -21,18 +21,18 @@ import java.util.UUID;
                 + "employee-requirements")
 public class EmployeeRequirementCommandController {
 
-    private final EmployeeRequirementCmdService employeeRequirementCmdService;
+    private final EmployeeRequirementCmdService requirementService;
 
     @PostMapping
     public Mono<UUID> create(
-            final @RequestBody EmployeeRequirementDto employeeRequirementDto,
+            final @RequestBody EmployeeRequirementDto dto,
             final @PathVariable UUID inventoryId
     ) {
-        return employeeRequirementCmdService.create(
+        return requirementService.create(
                 new EmployeeRequirementCreateCommand(
                         inventoryId,
-                        employeeRequirementDto.specialization(),
-                        employeeRequirementDto.equipmentName()
+                        dto.specialization(),
+                        dto.name()
                 )
         );
     }

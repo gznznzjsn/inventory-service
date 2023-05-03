@@ -41,7 +41,7 @@ public class RepositoryConfig {
 
     @Autowired
     public void configureInitialTrackingToken(
-            final EventProcessingConfigurer processingConfigurer
+            final EventProcessingConfigurer configurer
     ) {
         TrackingEventProcessorConfiguration tepConfig =
                 TrackingEventProcessorConfiguration
@@ -49,7 +49,7 @@ public class RepositoryConfig {
                         .andInitialTrackingToken(
                                 StreamableMessageSource::createHeadToken
                         );
-        processingConfigurer.registerTrackingEventProcessorConfiguration(
+        configurer.registerTrackingEventProcessorConfiguration(
                 config -> tepConfig
         );
     }
@@ -69,11 +69,11 @@ public class RepositoryConfig {
 
     @Bean
     public EmbeddedEventStore eventStore(
-            final EventStorageEngine storageEngine,
+            final EventStorageEngine engine,
             final SpringAxonConfiguration configuration
     ) {
         return EmbeddedEventStore.builder()
-                .storageEngine(storageEngine)
+                .storageEngine(engine)
                 .messageMonitor(configuration.getObject().messageMonitor(
                         EventStore.class,
                         "eventStore"

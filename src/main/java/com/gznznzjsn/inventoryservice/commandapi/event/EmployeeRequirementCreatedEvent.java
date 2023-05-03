@@ -13,8 +13,8 @@ import java.util.UUID;
 public class EmployeeRequirementCreatedEvent {
 
     private UUID inventoryId;
-    private UUID employeeRequirementId;
+    private UUID requirementId;
     private Specialization specialization;
-    private String equipmentName;
+    private String name;
 
 }
