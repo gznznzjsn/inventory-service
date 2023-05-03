@@ -29,7 +29,6 @@ SOFTWARE.
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.0.4</version>
     <relativePath/>
-    <!-- lookup parent from repository -->
   </parent>
   <groupId>com.gznznzjsn</groupId>
   <artifactId>inventory-service</artifactId>
