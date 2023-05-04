@@ -7,6 +7,12 @@ import java.util.UUID;
 
 public interface EquipmentCmdService {
 
+    /**
+     * @param command provides values to initialize new
+     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}.
+     *
+     * @return {@link Mono} with {@link UUID} of target aggregate
+     */
     Mono<UUID> create(EquipmentCreateCommand command);
 
 }

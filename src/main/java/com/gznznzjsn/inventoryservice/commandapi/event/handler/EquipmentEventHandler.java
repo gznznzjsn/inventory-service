@@ -20,6 +20,14 @@ public class EquipmentEventHandler {
 
     private final EquipmentRepository repository;
 
+    /**Handles {@link EquipmentCreatedEvent} extracts all fields from
+     * it, initializes all fields of
+     * {@link Equipment} and
+     * saves it to {@link EquipmentRepository}.
+     *
+     * @param event provides fields for new instance of
+     * {@link Equipment}
+     */
     @EventHandler
     public void on(final EquipmentCreatedEvent event) {
         Mono.just(event)
@@ -37,6 +45,12 @@ public class EquipmentEventHandler {
                 .subscribe();
     }
 
+    /**Handles {@link EquipmentOwnerAddedEvent} extracts
+     * {@link Equipment} identity, owner identity, finds {@link Equipment} and
+     * sets owner.
+     *
+     * @param event provides {@link Equipment} and owner identity
+     */
     @EventHandler
     public void on(final EquipmentOwnerAddedEvent event) {
         get(event.getEquipmentId())
@@ -52,6 +66,12 @@ public class EquipmentEventHandler {
                 .subscribe();
     }
 
+    /**Finds {@link Equipment} by its identity.
+     *
+     * @param equipmentId identity of required {@link Equipment}
+     * @return {@link Mono} with found {@link Equipment}
+     * @throws ResourceNotFoundException if {@link Equipment} not found
+     */
     public Mono<Equipment> get(final UUID equipmentId) {
         return repository.findById(equipmentId)
                 .switchIfEmpty(Mono.error(

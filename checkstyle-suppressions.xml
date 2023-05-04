@@ -26,6 +26,5 @@ SOFTWARE.
 <suppressions>
   <suppress checks="JavadocVariable"/>
   <suppress checks="DesignForExtension"/>
-  <suppress checks="MissingJavadocMethod"/>
   <suppress checks="HideUtilityClassConstructor"/>
 </suppressions>

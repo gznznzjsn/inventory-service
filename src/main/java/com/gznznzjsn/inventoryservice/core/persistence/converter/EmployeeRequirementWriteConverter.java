@@ -10,6 +10,12 @@ import org.springframework.r2dbc.core.Parameter;
 public class EmployeeRequirementWriteConverter
         implements Converter<EmployeeRequirement, OutboundRow> {
 
+    /**Converts {@link EmployeeRequirement} to {@link OutboundRow} to pass it to
+     * SQL query further.
+     *
+     * @param requirement which will be converted
+     * @return converted {@link EmployeeRequirement}
+     */
     @Override
     public OutboundRow convert(final EmployeeRequirement requirement) {
         OutboundRow row = new OutboundRow();

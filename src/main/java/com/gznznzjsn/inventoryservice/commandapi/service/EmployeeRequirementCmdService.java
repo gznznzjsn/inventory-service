@@ -7,6 +7,12 @@ import java.util.UUID;
 
 public interface EmployeeRequirementCmdService {
 
+    /**
+     * @param command provides values to initialize new
+     * {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}.
+     *
+     * @return {@link Mono} with {@link UUID} of target aggregate
+     */
     Mono<UUID> create(EmployeeRequirementCreateCommand command);
 
 }

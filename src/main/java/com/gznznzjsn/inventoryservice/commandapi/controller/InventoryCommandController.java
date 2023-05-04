@@ -18,6 +18,11 @@ public class InventoryCommandController {
 
     private final InventoryCmdService inventoryService;
 
+    /** With the help of {@link InventoryCmdService} creates
+     * {@link com.gznznzjsn.inventoryservice.core.model.Inventory}.
+     *
+     * @return {@link Mono} with {@link UUID} of target aggregate
+     */
     @PostMapping
     public Mono<UUID> create() {
         return inventoryService.create(new InventoryCreateCommand());

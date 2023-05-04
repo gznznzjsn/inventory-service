@@ -29,6 +29,13 @@ import java.util.List;
 @Configuration
 public class RepositoryConfig {
 
+    /**
+     * Collects all custom converters and registers list of them
+     * in new instance of {@link R2dbcCustomConversions}.
+     *
+     * @return {@link R2dbcCustomConversions} with all
+     * registered custom converters.
+     */
     @Bean
     public R2dbcCustomConversions customConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
@@ -39,6 +46,11 @@ public class RepositoryConfig {
         return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, converters);
     }
 
+    /**Adds {@link org.axonframework.eventhandling.TrackingToken} to
+     * {@link TrackingEventProcessorConfiguration} and registers it.
+     *
+     * @param configurer registers new configuration
+     */
     @Autowired
     public void configureInitialTrackingToken(
             final EventProcessingConfigurer configurer
@@ -54,6 +66,11 @@ public class RepositoryConfig {
         );
     }
 
+    /**Sets MongoDB as EventStorage and configures Serializers for it.
+     *
+     * @param client provides info about database
+     * @return EventStorageEngine configured to store events in MongoDB
+     */
     @Bean
     public EventStorageEngine storageEngine(final MongoClient client) {
         return MongoEventStorageEngine.builder()
@@ -67,6 +84,15 @@ public class RepositoryConfig {
                 .build();
     }
 
+    /**Configures {@link EmbeddedEventStore}.
+     *
+     * @param engine is used as {@link EventStorageEngine} for
+     * {@link EmbeddedEventStore}
+     * @param configuration is used for
+     * {@link org.axonframework.monitoring.MessageMonitor} creation
+     * @return {@link EmbeddedEventStore} with configured storage engine and
+     * {@link org.axonframework.monitoring.MessageMonitor}
+     */
     @Bean
     public EmbeddedEventStore eventStore(
             final EventStorageEngine engine,

@@ -15,6 +15,13 @@ public class EmployeeRequirementEventHandler {
 
     private final EmployeeRequirementRepository repository;
 
+    /**Handles {@link EmployeeRequirementCreatedEvent}, extracts values, builds
+     * {@link EmployeeRequirement} and saves it to
+     * {@link EmployeeRequirementRepository}.
+     *
+     * @param event provides values to initialize new
+     * {@link EmployeeRequirement}
+     */
     @EventHandler
     public void on(final EmployeeRequirementCreatedEvent event) {
         Mono.just(event)

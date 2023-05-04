@@ -21,6 +21,15 @@ public class EquipmentCommandController {
 
     private final EquipmentCmdService equipmentService;
 
+    /** With the help of {@link EquipmentCmdService} creates
+     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}.
+     *
+     * @param dto provides values to initialize
+     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment} fields.
+     * @param inventoryId id of target aggregate, which will store created
+     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}
+     * @return {@link Mono} with {@link UUID} of target aggregate
+     */
     @PostMapping
     public Mono<UUID> create(
             final @RequestBody EquipmentDto dto,
