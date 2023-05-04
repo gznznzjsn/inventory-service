@@ -10,7 +10,7 @@ public record EquipmentDto(
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         UUID id,
         @NotNull
-        String equipmentName
+        String name
 
 ) {
 }

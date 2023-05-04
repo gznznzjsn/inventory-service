@@ -15,8 +15,13 @@ public class InventoryEventHandler {
 
     private final InventoryRepository repository;
 
+    /** Handles {@link InventoryCreatedEvent} and creates {@link Inventory}.
+     *
+     * @param event provides fields of {@link Inventory}, which need to be
+     *              persisted
+     */
     @EventHandler
-    public void on(InventoryCreatedEvent event) {
+    public void on(final InventoryCreatedEvent event) {
         Mono.just(event)
                 .flatMap(e -> repository.save(Inventory.builder()
                         .id(event.getInventoryId())

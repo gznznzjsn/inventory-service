@@ -20,8 +20,16 @@ public class EquipmentEventHandler {
 
     private final EquipmentRepository repository;
 
+    /**Handles {@link EquipmentCreatedEvent} extracts all fields from
+     * it, initializes all fields of
+     * {@link Equipment} and
+     * saves it to {@link EquipmentRepository}.
+     *
+     * @param event provides fields for new instance of
+     * {@link Equipment}
+     */
     @EventHandler
-    public void on(EquipmentCreatedEvent event) {
+    public void on(final EquipmentCreatedEvent event) {
         Mono.just(event)
                 .flatMap(e -> repository.save(Equipment.builder()
                         .id(e.getEquipmentId())
@@ -31,14 +39,20 @@ public class EquipmentEventHandler {
                         .inventory(Inventory.builder()
                                 .id(e.getInventoryId())
                                 .build())
-                        .equipmentName(e.getEquipmentName())
+                        .name(e.getName())
                         .isNew(true)
                         .build()))
                 .subscribe();
     }
 
+    /**Handles {@link EquipmentOwnerAddedEvent} extracts
+     * {@link Equipment} identity, owner identity, finds {@link Equipment} and
+     * sets owner.
+     *
+     * @param event provides {@link Equipment} and owner identity
+     */
     @EventHandler
-    public void on(EquipmentOwnerAddedEvent event) {
+    public void on(final EquipmentOwnerAddedEvent event) {
         get(event.getEquipmentId())
                 .map(equipmentFromRepository -> {
                     if (event.getOwnerId() != null) {
@@ -52,11 +66,19 @@ public class EquipmentEventHandler {
                 .subscribe();
     }
 
-    public Mono<Equipment> get(UUID equipmentId) {
+    /**Finds {@link Equipment} by its identity.
+     *
+     * @param equipmentId identity of required {@link Equipment}
+     * @return {@link Mono} with found {@link Equipment}
+     * @throws ResourceNotFoundException if {@link Equipment} not found
+     */
+    public Mono<Equipment> get(final UUID equipmentId) {
         return repository.findById(equipmentId)
                 .switchIfEmpty(Mono.error(
                         new ResourceNotFoundException(
-                                "Equipment with id = " + equipmentId + " not found!"
+                                "Equipment with id = "
+                                + equipmentId
+                                + " not found!"
                         ))
                 );
     }

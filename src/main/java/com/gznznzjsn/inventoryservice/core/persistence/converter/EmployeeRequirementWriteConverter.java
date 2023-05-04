@@ -7,22 +7,44 @@ import org.springframework.data.r2dbc.mapping.OutboundRow;
 import org.springframework.r2dbc.core.Parameter;
 
 @WritingConverter
-public class EmployeeRequirementWriteConverter implements Converter<EmployeeRequirement, OutboundRow> {
+public class EmployeeRequirementWriteConverter
+        implements Converter<EmployeeRequirement, OutboundRow> {
 
+    /**Converts {@link EmployeeRequirement} to {@link OutboundRow} to pass it to
+     * SQL query further.
+     *
+     * @param requirement which will be converted
+     * @return converted {@link EmployeeRequirement}
+     */
     @Override
-    public OutboundRow convert(EmployeeRequirement employeeRequirement) {
+    public OutboundRow convert(final EmployeeRequirement requirement) {
         OutboundRow row = new OutboundRow();
-        if (employeeRequirement.getId() != null) {
-            row.put("employee_requirement_id", Parameter.from(employeeRequirement.getId()));
+        if (requirement.getId() != null) {
+            row.put(
+                    "employee_requirement_id",
+                    Parameter.from(requirement.getId())
+            );
         }
-        if (employeeRequirement.getInventory() != null && employeeRequirement.getInventory().getId() != null) {
-            row.put("inventory_id", Parameter.from(employeeRequirement.getInventory().getId()));
+        if (
+                requirement.getInventory() != null
+                && requirement.getInventory().getId() != null
+        ) {
+            row.put(
+                    "inventory_id",
+                    Parameter.from(requirement.getInventory().getId())
+            );
         }
-        if (employeeRequirement.getSpecialization() != null) {
-            row.put("specialization", Parameter.from(employeeRequirement.getSpecialization()));
+        if (requirement.getSpecialization() != null) {
+            row.put(
+                    "specialization",
+                    Parameter.from(requirement.getSpecialization())
+            );
         }
-        if (employeeRequirement.getEquipmentName() != null) {
-            row.put("equipment_name", Parameter.from(employeeRequirement.getEquipmentName()));
+        if (requirement.getName() != null) {
+            row.put(
+                    "equipment_name",
+                    Parameter.from(requirement.getName())
+            );
         }
         return row;
     }

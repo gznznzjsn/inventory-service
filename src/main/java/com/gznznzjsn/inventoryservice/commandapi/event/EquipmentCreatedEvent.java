@@ -13,7 +13,7 @@ public class EquipmentCreatedEvent {
 
     private UUID inventoryId;
     private UUID equipmentId;
-    private String equipmentName;
+    private String name;
     private UUID ownerId;
 
 }

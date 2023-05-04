@@ -14,7 +14,7 @@ public class EquipmentEntity {
 
     @EntityId
     private UUID equipmentId;
-    private String equipmentName;
+    private String name;
     private UUID ownerId;
 
 }

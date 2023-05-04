@@ -16,6 +16,6 @@ public class EmployeeRequirementCreateCommand {
     @TargetAggregateIdentifier
     private UUID inventoryId;
     private Specialization specialization;
-    private String equipmentName;
+    private String name;
 
 }

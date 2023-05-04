@@ -14,14 +14,14 @@ import java.util.UUID;
 public class EquipmentReadConverter implements Converter<Row, Equipment> {
 
     @Override
-    public Equipment convert(Row source) {
+    public Equipment convert(final Row source) {
         return Equipment.builder()
                 .id(source.get("equipment_id", UUID.class))
                 .inventory(Inventory.builder()
                         .id(source.get("inventory_id", UUID.class))
                         .build()
                 )
-                .equipmentName(source.get("equipment_name", String.class))
+                .name(source.get("equipment_name", String.class))
                 .owner(Employee.builder()
                         .id(source.get("owner_id", UUID.class))
                         .build())

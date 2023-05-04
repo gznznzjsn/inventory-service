@@ -24,7 +24,7 @@ public class EmployeeRequirement implements Persistable<UUID> {
     private UUID id;
     private Inventory inventory;
     private Specialization specialization;
-    private String equipmentName;
+    private String name;
 
     @Transient
     private boolean isNew = false;

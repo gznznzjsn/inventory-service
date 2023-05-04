@@ -15,15 +15,22 @@ public class EmployeeRequirementEventHandler {
 
     private final EmployeeRequirementRepository repository;
 
+    /**Handles {@link EmployeeRequirementCreatedEvent}, extracts values, builds
+     * {@link EmployeeRequirement} and saves it to
+     * {@link EmployeeRequirementRepository}.
+     *
+     * @param event provides values to initialize new
+     * {@link EmployeeRequirement}
+     */
     @EventHandler
-    public void on(EmployeeRequirementCreatedEvent event) {
+    public void on(final EmployeeRequirementCreatedEvent event) {
         Mono.just(event)
                 .flatMap(e -> repository.save(EmployeeRequirement.builder()
-                        .id(e.getEmployeeRequirementId())
+                        .id(e.getRequirementId())
                         .inventory(Inventory.builder()
                                 .id(e.getInventoryId())
                                 .build())
-                        .equipmentName(e.getEquipmentName())
+                        .name(e.getName())
                         .specialization(e.getSpecialization())
                         .isNew(true)
                         .build()))

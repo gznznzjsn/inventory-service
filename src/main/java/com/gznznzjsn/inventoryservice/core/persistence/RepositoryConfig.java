@@ -29,6 +29,13 @@ import java.util.List;
 @Configuration
 public class RepositoryConfig {
 
+    /**
+     * Collects all custom converters and registers list of them
+     * in new instance of {@link R2dbcCustomConversions}.
+     *
+     * @return {@link R2dbcCustomConversions} with all
+     * registered custom converters.
+     */
     @Bean
     public R2dbcCustomConversions customConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
@@ -39,29 +46,64 @@ public class RepositoryConfig {
         return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, converters);
     }
 
+    /**Adds {@link org.axonframework.eventhandling.TrackingToken} to
+     * {@link TrackingEventProcessorConfiguration} and registers it.
+     *
+     * @param configurer registers new configuration
+     */
     @Autowired
-    public void configureInitialTrackingToken(EventProcessingConfigurer processingConfigurer) {
+    public void configureInitialTrackingToken(
+            final EventProcessingConfigurer configurer
+    ) {
         TrackingEventProcessorConfiguration tepConfig =
-                TrackingEventProcessorConfiguration.forSingleThreadedProcessing()
-                        .andInitialTrackingToken(StreamableMessageSource::createHeadToken);
-        processingConfigurer.registerTrackingEventProcessorConfiguration(config -> tepConfig);
+                TrackingEventProcessorConfiguration
+                        .forSingleThreadedProcessing()
+                        .andInitialTrackingToken(
+                                StreamableMessageSource::createHeadToken
+                        );
+        configurer.registerTrackingEventProcessorConfiguration(
+                config -> tepConfig
+        );
     }
 
+    /**Sets MongoDB as EventStorage and configures Serializers for it.
+     *
+     * @param client provides info about database
+     * @return EventStorageEngine configured to store events in MongoDB
+     */
     @Bean
-    public EventStorageEngine storageEngine(MongoClient client) {
+    public EventStorageEngine storageEngine(final MongoClient client) {
         return MongoEventStorageEngine.builder()
-                .mongoTemplate(DefaultMongoTemplate.builder().mongoDatabase(client).build())
+                .mongoTemplate(
+                        DefaultMongoTemplate.builder()
+                                .mongoDatabase(client)
+                                .build()
+                )
                 .eventSerializer(JacksonSerializer.defaultSerializer())
                 .snapshotSerializer(JacksonSerializer.defaultSerializer())
                 .build();
     }
 
+    /**Configures {@link EmbeddedEventStore}.
+     *
+     * @param engine is used as {@link EventStorageEngine} for
+     * {@link EmbeddedEventStore}
+     * @param configuration is used for
+     * {@link org.axonframework.monitoring.MessageMonitor} creation
+     * @return {@link EmbeddedEventStore} with configured storage engine and
+     * {@link org.axonframework.monitoring.MessageMonitor}
+     */
     @Bean
-    public EmbeddedEventStore eventStore(EventStorageEngine storageEngine, SpringAxonConfiguration configuration) {
+    public EmbeddedEventStore eventStore(
+            final EventStorageEngine engine,
+            final SpringAxonConfiguration configuration
+    ) {
         return EmbeddedEventStore.builder()
-                .storageEngine(storageEngine)
-                .messageMonitor(configuration.getObject().messageMonitor(EventStore.class,
-                        "eventStore"))
+                .storageEngine(engine)
+                .messageMonitor(configuration.getObject().messageMonitor(
+                        EventStore.class,
+                        "eventStore"
+                ))
                 .build();
     }
 
