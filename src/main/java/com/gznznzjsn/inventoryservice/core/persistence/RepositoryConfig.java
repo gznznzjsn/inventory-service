@@ -46,7 +46,8 @@ public class RepositoryConfig {
         return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, converters);
     }
 
-    /**Adds {@link org.axonframework.eventhandling.TrackingToken} to
+    /**
+     * Adds {@link org.axonframework.eventhandling.TrackingToken} to
      * {@link TrackingEventProcessorConfiguration} and registers it.
      *
      * @param configurer registers new configuration
@@ -66,7 +67,8 @@ public class RepositoryConfig {
         );
     }
 
-    /**Sets MongoDB as EventStorage and configures Serializers for it.
+    /**
+     * Sets MongoDB as EventStorage and configures Serializers for it.
      *
      * @param client provides info about database
      * @return EventStorageEngine configured to store events in MongoDB
@@ -84,12 +86,14 @@ public class RepositoryConfig {
                 .build();
     }
 
-    /**Configures {@link EmbeddedEventStore}.
+    /**
+     * Configures {@link EmbeddedEventStore}.
      *
-     * @param engine is used as {@link EventStorageEngine} for
-     * {@link EmbeddedEventStore}
+     * @param engine        is used as {@link EventStorageEngine} for
+     *                      {@link EmbeddedEventStore}
      * @param configuration is used for
-     * {@link org.axonframework.monitoring.MessageMonitor} creation
+     *                      {@link org.axonframework.monitoring.MessageMonitor}
+     *                      creation
      * @return {@link EmbeddedEventStore} with configured storage engine and
      * {@link org.axonframework.monitoring.MessageMonitor}
      */
