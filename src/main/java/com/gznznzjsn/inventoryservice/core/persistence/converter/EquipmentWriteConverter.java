@@ -32,6 +32,18 @@ public class EquipmentWriteConverter
                     Parameter.from(equipment.getName())
             );
         }
+        if (equipment.getManufacturer() != null) {
+            row.put(
+                    "manufacturer",
+                    Parameter.from(equipment.getManufacturer())
+            );
+        }
+        if (equipment.getDescription() != null) {
+            row.put(
+                    "description",
+                    Parameter.from(equipment.getDescription())
+            );
+        }
         if (equipment.getOwner() != null
             && equipment.getOwner().getId() != null) {
             row.put(

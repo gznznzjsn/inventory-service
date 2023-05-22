@@ -25,6 +25,8 @@ public class EquipmentDeserializer extends StdDeserializer<Equipment> {
         return Equipment.builder()
                 .id(UUID.fromString(node.get("equipment_id").asText()))
                 .name(node.get("equipment_name").asText())
+                .manufacturer(node.get("manufacturer").asText())
+                .description(node.get("description").asText())
                 .inventory(Inventory.builder()
                         .id(UUID.fromString(node.get("inventory_id").asText()))
                         .build())

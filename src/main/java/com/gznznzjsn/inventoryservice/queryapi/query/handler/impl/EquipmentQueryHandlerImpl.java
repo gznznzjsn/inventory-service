@@ -16,8 +16,7 @@ public class EquipmentQueryHandlerImpl implements EquipmentQueryHandler {
 
     @Override
     public Flux<Equipment> handle(GetEquipmentByCriteriaQuery query) {
-        repository.trySearch();
-        return Flux.empty();
+        return repository.trySearch();
     }
 
 }
