@@ -22,6 +22,10 @@ public class EquipmentDeserializer extends StdDeserializer<Equipment> {
     public Equipment deserialize(JsonParser parser, DeserializationContext deserializer) throws IOException {
         ObjectCodec codec = parser.getCodec();
         JsonNode node = codec.readTree(parser);
+        UUID employeeId = node.get("owner_id") == null
+                ? null
+                : UUID.fromString(node.get("owner_id").asText());
+
         return Equipment.builder()
                 .id(UUID.fromString(node.get("equipment_id").asText()))
                 .name(node.get("equipment_name").asText())
@@ -31,7 +35,7 @@ public class EquipmentDeserializer extends StdDeserializer<Equipment> {
                         .id(UUID.fromString(node.get("inventory_id").asText()))
                         .build())
                 .owner(Employee.builder()
-                        .id(UUID.fromString(node.get("owner_id").asText()))
+                        .id(employeeId)
                         .build())
                 .build();
     }

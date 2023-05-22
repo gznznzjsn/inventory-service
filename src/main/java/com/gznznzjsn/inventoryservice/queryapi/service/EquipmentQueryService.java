@@ -1,11 +1,11 @@
 package com.gznznzjsn.inventoryservice.queryapi.service;
 
 import com.gznznzjsn.inventoryservice.core.model.Equipment;
-import com.gznznzjsn.inventoryservice.queryapi.query.GetEquipmentByCriteriaQuery;
+import com.gznznzjsn.inventoryservice.queryapi.query.GetEquipmentAutocompleteQuery;
 import reactor.core.publisher.Flux;
 
 public interface EquipmentQueryService {
 
-    Flux<Equipment> retrieveByCriteria(GetEquipmentByCriteriaQuery query);
+    Flux<Equipment> retrieveAutocomplete(GetEquipmentAutocompleteQuery query);
 
 }
