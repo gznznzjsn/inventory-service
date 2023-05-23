@@ -71,8 +71,8 @@ public class EquipmentESRepositoryImpl implements EquipmentESRepository {
         SearchResponse<Equipment>
                 searchResponse = client.search(
                 s -> s.index("equipment")
-                        .from(0)
-                        .size(3)
+                        .from(query.from())
+                        .size(query.size())
                         .query(q -> q.bool(b -> b.must(
                                 inventoryQuery,
                                 Query.of(qri -> qri.bool(

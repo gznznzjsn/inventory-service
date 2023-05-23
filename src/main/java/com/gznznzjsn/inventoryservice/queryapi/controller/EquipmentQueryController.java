@@ -28,18 +28,21 @@ public class EquipmentQueryController {
      * @param inventoryId id of {@link
      *                    com.gznznzjsn.inventoryservice.core.model.Inventory},
      *                    which contains needed {@link Equipment}
+     * @param from        start of page
+     * @param size        size of page
      * @param query       search query of a user, which must be autocompleted
-     * @return {@link Flux} collection of the most relevant {@link Equipment}
+     * @return {@link Flux} page with the most relevant {@link Equipment}
      */
     @GetMapping("/autocomplete")
     public Flux<Equipment> get(
             final @PathVariable UUID inventoryId,
+            final @RequestParam Integer from,
+            final @RequestParam Integer size,
             final @RequestParam String query
     ) {  //todo fix dto
         return equipmentService
                 .retrieveAutocomplete(new GetEquipmentAutocompleteQuery(
-                        inventoryId,
-                        query
+                        inventoryId, from, size, query
                 ));
     }
 
