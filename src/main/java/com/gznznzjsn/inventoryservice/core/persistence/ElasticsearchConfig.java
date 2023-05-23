@@ -18,15 +18,18 @@ public class ElasticsearchConfig {
 
     @Bean
     public ElasticsearchClient elasticsearchClient() {
-        EquipmentDeserializer equipmentDeserializer = new EquipmentDeserializer(Equipment.class);
+        EquipmentDeserializer deserializer =
+                new EquipmentDeserializer(Equipment.class);
         SimpleModule module = new SimpleModule("EquipmentDeserializer");
-        module.addDeserializer(Equipment.class, equipmentDeserializer);
+        module.addDeserializer(Equipment.class, deserializer);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(module);
         RestClient restClient = RestClient.builder(
-                new HttpHost("localhost", 9200)).build();
+                new HttpHost("localhost", 9200)
+        ).build();
         ElasticsearchTransport transport = new RestClientTransport(
-                restClient, new JacksonJsonpMapper(mapper));
+                restClient, new JacksonJsonpMapper(mapper)
+        );
         return new ElasticsearchClient(transport);
     }
 

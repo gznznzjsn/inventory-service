@@ -22,54 +22,52 @@ public class EquipmentESRepositoryImpl implements EquipmentESRepository {
 
     @Override
     @SneakyThrows
-    public Flux<Equipment> getAutocomplete(GetEquipmentAutocompleteQuery query) {
-        Query nameQuery = Query.of(qr -> qr
+    public Flux<Equipment> getAutocomplete(
+            GetEquipmentAutocompleteQuery query
+    ) {
+        Query nameQuery = Query.of(q -> q
                 .matchPhrasePrefix(p -> p
                         .field("equipment_name")
                         .query(query.query())
                         .slop(1)
                         .maxExpansions(10)
-                ));
-        Query manufacturerQuery = Query.of(qr -> qr.matchPhrasePrefix(
+                )
+        );
+        Query manufacturerQuery = Query.of(q -> q.matchPhrasePrefix(
                 p -> p.field("manufacturer")
+                        .query(query.query())
+                        .slop(1)
+                        .maxExpansions(10)
+        ));
+        Query descriptionQuery = Query.of(q -> q.matchPhrasePrefix(
+                p -> p.field("description")
                         .query(query.query())
                         .slop(2)
                         .maxExpansions(10)
         ));
-        Query descriptionQuery = Query.of(qr -> qr.matchPhrasePrefix(
-                p -> p.field("description")
-                        .query(query.query())
-                        .slop(2)
-                        .maxExpansions(10))
-        );
+        Query inventoryQuery = Query.of(qr -> qr.queryString(qs -> qs.query(
+                "inventory_id.keyword:"
+                + query.inventoryId()
+        )));
         SearchResponse<Equipment>
                 searchResponse = client.search(
                 s -> s.index("equipment")
                         .from(0)
                         .size(3)
-                        .query(q -> q.bool(
-                                b -> b.must(
-//                                        Query.of(qr -> qr.match(p -> p
-//                                                .field("inventory_id")
-//                                                .query(
-//                                                        query.inventoryId()
-//                                                                .toString()
-//                                                )
-//                                        )),
-                                        Query.of(q2 -> q2.bool(b1 -> b1
-                                                .should(
-                                                        nameQuery,
-                                                        manufacturerQuery,
-                                                        descriptionQuery
-                                                )
-                                        ))
-                                )
-                        )),
+                        .query(q -> q.bool(b -> b.must(
+                                inventoryQuery,
+                                Query.of(qri -> qri.bool(
+                                        bl -> bl.should(
+                                                nameQuery,
+                                                manufacturerQuery,
+                                                descriptionQuery
+                                        )
+                                ))
+                        ))),
                 Equipment.class
         );
         List<Hit<Equipment>> hits = searchResponse.hits().hits();
-        return Flux.fromIterable(hits)
-                .mapNotNull(Hit::source);
+        return Flux.fromIterable(hits).mapNotNull(Hit::source);
     }
 
 }

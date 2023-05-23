@@ -16,7 +16,7 @@ public class EquipmentQueryServiceImpl implements EquipmentQueryService {
 
     @Override
     public Flux<Equipment> retrieveAutocomplete(
-            GetEquipmentAutocompleteQuery query
+            final GetEquipmentAutocompleteQuery query
     ) {
         return equipmentHandler.handle(query);
     }
