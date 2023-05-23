@@ -17,7 +17,9 @@ public record EquipmentDto(
         String manufacturer,
 
         @NotBlank
-        String description
+        String description,
+
+        EmployeeDto owner
 
 ) {
 }
