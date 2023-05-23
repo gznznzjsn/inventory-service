@@ -14,12 +14,22 @@ import java.util.UUID;
 
 public class EquipmentDeserializer extends StdDeserializer<Equipment> {
 
-    public EquipmentDeserializer(Class<?> vc) {
+    /**
+     * Calls constructor of parent class {@link StdDeserializer}.
+     *
+     * @param vc class of the value, which needs to be deserialized
+     */
+    public EquipmentDeserializer(
+            final Class<?> vc
+    ) {
         super(vc);
     }
 
     @Override
-    public Equipment deserialize(JsonParser parser, DeserializationContext deserializer) throws IOException {
+    public Equipment deserialize(
+            final JsonParser parser,
+            final DeserializationContext deserializer
+    ) throws IOException {
         ObjectCodec codec = parser.getCodec();
         JsonNode node = codec.readTree(parser);
         UUID employeeId = node.get("owner_id") == null
@@ -31,12 +41,18 @@ public class EquipmentDeserializer extends StdDeserializer<Equipment> {
                 .name(node.get("equipment_name").asText())
                 .manufacturer(node.get("manufacturer").asText())
                 .description(node.get("description").asText())
-                .inventory(Inventory.builder()
-                        .id(UUID.fromString(node.get("inventory_id").asText()))
-                        .build())
-                .owner(Employee.builder()
-                        .id(employeeId)
-                        .build())
+                .inventory(
+                        Inventory.builder()
+                                .id(UUID.fromString(
+                                        node.get("inventory_id").asText()
+                                ))
+                                .build()
+                )
+                .owner(
+                        Employee.builder()
+                                .id(employeeId)
+                                .build()
+                )
                 .build();
     }
 

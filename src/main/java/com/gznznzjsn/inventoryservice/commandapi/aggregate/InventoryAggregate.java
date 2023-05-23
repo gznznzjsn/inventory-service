@@ -41,8 +41,8 @@ public class InventoryAggregate {
      * Handles {@link InventoryCreateCommand} and applies
      * {@link InventoryCreatedEvent} to create new aggregate.
      *
-     * @param command indicates, that
-     *                {@link com.gznznzjsn.inventoryservice.core.model.Inventory}
+     * @param command indicates, that {@link
+     *                com.gznznzjsn.inventoryservice.core.model.Inventory}
      *                should be created
      */
     @CommandHandler
@@ -57,16 +57,17 @@ public class InventoryAggregate {
      * {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
      * in current aggregate.
      *
-     * @param command provides id of target aggregate and values to initialize
-     *                {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
+     * @param cmd provides id of target aggregate
+     *            and values to initialize {@link
+     *            com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
      */
     @CommandHandler
-    public void handle(final EmployeeRequirementCreateCommand command) {
+    public void handle(final EmployeeRequirementCreateCommand cmd) {
         AggregateLifecycle.apply(new EmployeeRequirementCreatedEvent(
                 this.inventoryId,
                 UUID.randomUUID(),
-                command.getSpecialization(),
-                command.getName()
+                cmd.getSpecialization(),
+                cmd.getName()
         ));
     }
 
@@ -103,9 +104,6 @@ public class InventoryAggregate {
      *
      * @param command provides id of target aggregate and
      *                values to set owner and its {@link Specialization}
-     * @throws NotEnoughResourcesException if requested
-     *                                     {@link com.gznznzjsn.inventoryservice.core.model.Equipment} is not
-     *                                     available
      */
     @CommandHandler
     public void handle(final EquipmentAssignCommand command) {

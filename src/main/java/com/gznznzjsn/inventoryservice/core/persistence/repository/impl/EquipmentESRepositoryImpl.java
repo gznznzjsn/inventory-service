@@ -9,6 +9,7 @@ import com.gznznzjsn.inventoryservice.core.persistence.repository.EquipmentESRep
 import com.gznznzjsn.inventoryservice.queryapi.query.GetEquipmentAutocompleteQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
@@ -20,30 +21,48 @@ public class EquipmentESRepositoryImpl implements EquipmentESRepository {
 
     private final ElasticsearchClient client;
 
+    @Value("${settings.elasticsearch.equipment.name.slop}")
+    private int nameSlop;
+
+    @Value("${settings.elasticsearch.equipment.name.max-expansions}")
+    private int nameMaxExpansions;
+
+    @Value("${settings.elasticsearch.equipment.manufacturer.slop}")
+    private int manufacturerSlop;
+
+    @Value("${settings.elasticsearch.equipment.manufacturer.max-expansions}")
+    private int manufacturerMaxExpansions;
+
+    @Value("${settings.elasticsearch.equipment.description.slop}")
+    private int descriptionSlop;
+
+    @Value("${settings.elasticsearch.equipment.description.max-expansions}")
+    private int descriptionMaxExpansions;
+
     @Override
     @SneakyThrows
     public Flux<Equipment> getAutocomplete(
-            GetEquipmentAutocompleteQuery query
+            final GetEquipmentAutocompleteQuery query
     ) {
         Query nameQuery = Query.of(q -> q
                 .matchPhrasePrefix(p -> p
                         .field("equipment_name")
                         .query(query.query())
-                        .slop(1)
-                        .maxExpansions(10)
+                        .slop(nameSlop)
+                        .maxExpansions(nameMaxExpansions)
                 )
         );
         Query manufacturerQuery = Query.of(q -> q.matchPhrasePrefix(
                 p -> p.field("manufacturer")
                         .query(query.query())
-                        .slop(1)
-                        .maxExpansions(10)
+                        .slop(manufacturerSlop)
+                        .maxExpansions(manufacturerMaxExpansions)
         ));
         Query descriptionQuery = Query.of(q -> q.matchPhrasePrefix(
                 p -> p.field("description")
                         .query(query.query())
-                        .slop(2)
-                        .maxExpansions(10)
+                        .slop(descriptionSlop)
+                        .maxExpansions(descriptionMaxExpansions)
         ));
         Query inventoryQuery = Query.of(qr -> qr.queryString(qs -> qs.query(
                 "inventory_id.keyword:"

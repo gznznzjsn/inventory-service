@@ -25,6 +25,7 @@ spring:
 server:
   port: 8080
 
+
 axon:
   serializer:
     general: jackson
@@ -32,3 +33,17 @@ axon:
     messages: jackson
   axonserver:
     servers: ${AXON_AXONSERVER_SERVERS}
+
+settings:
+  elasticsearch:
+    port: 9200
+    equipment:
+      name:
+        slop: 1
+        max-expansions: 10
+      manufacturer:
+        slop: 1
+        max-expansions: 10
+      description:
+        slop: 2
+        max-expansions: 10
