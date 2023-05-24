@@ -23,6 +23,7 @@ public class ElasticsearchConfig {
      * out of them, {@link ElasticsearchClient} out of it.
      *
      * @param port port number of Elastic search
+     * @param host host name of Elastic search
      * @return {@link ElasticsearchClient} for communication with Elastic search
      */
     @Bean
