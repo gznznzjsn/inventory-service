@@ -19,9 +19,7 @@ public class EquipmentDeserializer extends StdDeserializer<Equipment> {
      *
      * @param vc class of the value, which needs to be deserialized
      */
-    public EquipmentDeserializer(
-            final Class<?> vc
-    ) {
+    public EquipmentDeserializer(final Class<?> vc) {
         super(vc);
     }
 
@@ -35,7 +33,6 @@ public class EquipmentDeserializer extends StdDeserializer<Equipment> {
         UUID employeeId = node.get("owner_id") == null
                 ? null
                 : UUID.fromString(node.get("owner_id").asText());
-
         return Equipment.builder()
                 .id(UUID.fromString(node.get("equipment_id").asText()))
                 .name(node.get("equipment_name").asText())

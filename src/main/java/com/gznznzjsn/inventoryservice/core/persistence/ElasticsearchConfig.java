@@ -27,7 +27,8 @@ public class ElasticsearchConfig {
      */
     @Bean
     public ElasticsearchClient elasticsearchClient(
-            @Value("${settings.elasticsearch.port}") final int port
+            @Value("${settings.elasticsearch.port}") final int port,
+            @Value("${settings.elasticsearch.host}") final String host
     ) {
         EquipmentDeserializer deserializer =
                 new EquipmentDeserializer(Equipment.class);
@@ -36,7 +37,7 @@ public class ElasticsearchConfig {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(module);
         RestClient restClient = RestClient.builder(
-                new HttpHost("localhost", port)
+                new HttpHost(host, port)
         ).build();
         ElasticsearchTransport transport = new RestClientTransport(
                 restClient, new JacksonJsonpMapper(mapper)
