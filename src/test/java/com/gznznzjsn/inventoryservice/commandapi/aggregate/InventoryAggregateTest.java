@@ -1,15 +1,16 @@
 package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
+import com.gznznzjsn.inventoryservice.commandapi.command.EmployeeRequirementCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.event.EmployeeRequirementCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
+import com.gznznzjsn.inventoryservice.core.model.Specialization;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
-import org.axonframework.test.matchers.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Objects;
 import java.util.UUID;
 
 import static org.axonframework.test.matchers.Matchers.*;
@@ -28,11 +29,11 @@ class InventoryAggregateTest {
                 .when(new InventoryCreateCommand())
                 .expectSuccessfulHandlerExecution()
                 .expectEventsMatching(exactSequenceOf(
-                        messageWithPayload(matches(payload ->
-                                payload.getClass().equals(
+                        messageWithPayload(matches(p ->
+                                p.getClass().equals(
                                         InventoryCreatedEvent.class
                                 )
-                                && ((InventoryCreatedEvent) payload)
+                                && ((InventoryCreatedEvent) p)
                                            .getInventoryId() != null
                         )),
                         andNoMore()
@@ -47,12 +48,28 @@ class InventoryAggregateTest {
     }
 
     @Test
-    void onInventoryCreatedEvent() {
-        fixture.given()
-                .when(new InventoryCreatedEvent(
-                        UUID.fromString("123e4567-e89b-12d3-a456-426614174000")
+    void handleEmployeeRequirementCreateCommand() {
+        UUID inventoryId = UUID.fromString(
+                "123e4567-e89b-12d3-a456-426614174000"
+        );
+        fixture.given(new InventoryCreatedEvent(inventoryId))
+                .when(new EmployeeRequirementCreateCommand(
+                        inventoryId,
+                        Specialization.CLEANER,
+                        "NAME"
                 ))
-                .expectSuccessfulHandlerExecution();
+                .expectSuccessfulHandlerExecution()
+                .expectEventsMatching(exactSequenceOf(
+                        messageWithPayload(
+                                matches(p -> p.getClass().equals(
+                                        EmployeeRequirementCreatedEvent.class
+                                )),
+                                payloadsMatching(
+                                        matches(EmployeeRequirementCreatedEvent::getInventoryId)
+                                        )
+                        ),
+                        andNoMore()
+                ));
 //                .expectEventsMatching(exactSequenceOf(
 //                        messageWithPayload(matches(payload ->
 //                                payload.getClass().equals(
