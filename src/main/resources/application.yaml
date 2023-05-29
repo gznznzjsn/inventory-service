@@ -36,8 +36,8 @@ axon:
 
 settings:
   elasticsearch:
-    port: 9200
-    host: localhost
+    port: ${ELASTICSEARCH_PORT}
+    host: ${ELASTICSEARCH_HOST}
     equipment:
       name:
         slop: 1
