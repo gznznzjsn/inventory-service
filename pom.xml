@@ -22,9 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -39,9 +37,7 @@ SOFTWARE.
     <description>inventory-service</description>
 
     <properties>
-        <start-class>
-            com.gznznzjsn.inventoryservice.InventoryServiceApplication
-        </start-class>
+        <start-class>com.gznznzjsn.inventoryservice.InventoryServiceApplication</start-class>
         <java.version>19</java.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
@@ -70,7 +66,7 @@ SOFTWARE.
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-elasticsearch</artifactId>
-            <version>5.0.3</version>
+            <version>5.0.6</version>
         </dependency>
         <dependency>
             <groupId>co.elastic.clients</groupId>
@@ -86,7 +82,7 @@ SOFTWARE.
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.14.2</version>
+            <version>2.15.1</version>
         </dependency>
         <dependency>
             <groupId>jakarta.json</groupId>
@@ -150,9 +146,7 @@ SOFTWARE.
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>
-                        com.gznznzjsn.inventoryservice.InventoryServiceApplication
-                    </mainClass>
+                    <mainClass/>
                     <layout>JAR</layout>
                 </configuration>
             </plugin>
@@ -194,12 +188,27 @@ SOFTWARE.
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <suppressionsFileExpression>
-                                checkstyle.suppressions.file
-                            </suppressionsFileExpression>
-                            <suppressionsLocation>
-                                checkstyle-suppressions.xml
-                            </suppressionsLocation>
+                            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                            <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>au.com.acegi</groupId>
+                <artifactId>xml-format-maven-plugin</artifactId>
+                <version>3.2.2</version>
+                <executions>
+                    <execution>
+                        <id>xml-format</id>
+                        <goals>
+                            <goal>xml-check</goal>
+                        </goals>
+                        <configuration>
+                            <indentSize>4</indentSize>
+                            <keepBlankLines>true</keepBlankLines>
+                            <lineEnding>LF</lineEnding>
+                            <includes>pom.xml</includes>
                         </configuration>
                     </execution>
                 </executions>
