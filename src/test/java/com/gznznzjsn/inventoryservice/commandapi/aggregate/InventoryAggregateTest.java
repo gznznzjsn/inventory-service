@@ -1,8 +1,10 @@
 package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
 import com.gznznzjsn.inventoryservice.commandapi.command.EmployeeRequirementCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.event.EmployeeRequirementCreatedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
 import com.gznznzjsn.inventoryservice.core.model.Specialization;
 import org.axonframework.test.aggregate.AggregateTestFixture;
@@ -13,9 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
-import static org.axonframework.test.matchers.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 class InventoryAggregateTest {
@@ -25,21 +26,13 @@ class InventoryAggregateTest {
 
     @Test
     void handleInventoryCreateCommand() {
+        UUID id = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         fixture.given()
-                .when(new InventoryCreateCommand())
+                .when(new InventoryCreateCommand(id))
                 .expectSuccessfulHandlerExecution()
-                .expectEventsMatching(exactSequenceOf(
-                        messageWithPayload(matches(p ->
-                                p.getClass().equals(
-                                        InventoryCreatedEvent.class
-                                )
-                                && ((InventoryCreatedEvent) p)
-                                           .getInventoryId() != null
-                        )),
-                        andNoMore()
-                ))
+                .expectEvents(new InventoryCreatedEvent(id))
                 .expectState(a -> {
-                    assertNotNull(a.getInventoryId());
+                    assertEquals(id, a.getInventoryId());
                     assertNotNull(a.getEquipmentMap());
                     assertEquals(0, a.getEquipmentMap().size());
                     assertNotNull(a.getRequirementMap());
@@ -49,37 +42,75 @@ class InventoryAggregateTest {
 
     @Test
     void handleEmployeeRequirementCreateCommand() {
-        UUID inventoryId = UUID.fromString(
-                "123e4567-e89b-12d3-a456-426614174000"
+        UUID inventoryId = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
+        UUID requirementId = UUID.fromString(
+                "123e4567-e89b-12d3-a456-426614174001"
         );
         fixture.given(new InventoryCreatedEvent(inventoryId))
                 .when(new EmployeeRequirementCreateCommand(
                         inventoryId,
+                        requirementId,
                         Specialization.CLEANER,
-                        "NAME"
+                        "FAKE NAME"
                 ))
                 .expectSuccessfulHandlerExecution()
-                .expectEventsMatching(exactSequenceOf(
-                        messageWithPayload(
-                                matches(p -> p.getClass().equals(
-                                        EmployeeRequirementCreatedEvent.class
-                                )),
-                                payloadsMatching(
-                                        matches(EmployeeRequirementCreatedEvent::getInventoryId)
-                                        )
-                        ),
-                        andNoMore()
-                ));
-//                .expectEventsMatching(exactSequenceOf(
-//                        messageWithPayload(matches(payload ->
-//                                payload.getClass().equals(
-//                                        InventoryCreatedEvent.class
-//                                )
-//                                && ((InventoryCreatedEvent) payload)
-//                                           .getInventoryId() != null
-//                        )),
-//                        andNoMore()
-//                ));
-
+                .expectEvents(new EmployeeRequirementCreatedEvent(
+                        inventoryId,
+                        requirementId,
+                        Specialization.CLEANER,
+                        "FAKE NAME"
+                ))
+                .expectState(a -> {
+                    assertEquals(inventoryId, a.getInventoryId());
+                    assertNotNull(a.getEquipmentMap());
+                    assertEquals(0, a.getEquipmentMap().size());
+                    assertNotNull(a.getRequirementMap());
+                    assertEquals(1, a.getRequirementMap().size());
+                    assertEquals(
+                            new EmployeeRequirementEntity(
+                                    requirementId,
+                                    Specialization.CLEANER,
+                                    "FAKE NAME"
+                            ),
+                            a.getRequirementMap().get(requirementId)
+                    );
+                });
     }
+
+    @Test
+    void handleEquipmentCreateCommand() {
+        UUID inventoryId = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
+        UUID equipmentId = UUID.fromString(
+                "123e4567-e89b-12d3-a456-426614174001"
+        );
+        fixture.given(new InventoryCreatedEvent(inventoryId))
+                .when(new EquipmentCreateCommand(
+                        inventoryId,
+                        equipmentId,
+                        "FAKE NAME"
+                ))
+                .expectSuccessfulHandlerExecution()
+                .expectEvents(new EquipmentCreatedEvent(
+                        inventoryId,
+                        equipmentId,
+                        "FAKE NAME",
+                        null
+                ))
+                .expectState(a -> {
+                    assertEquals(inventoryId, a.getInventoryId());
+                    assertNotNull(a.getEquipmentMap());
+                    assertEquals(1, a.getEquipmentMap().size());
+                    assertEquals(
+                            new EquipmentEntity(
+                                    equipmentId,
+                                    "FAKE NAME",
+                                    null
+                            ),
+                            a.getEquipmentMap().get(equipmentId)
+                    );
+                    assertNotNull(a.getRequirementMap());
+                    assertEquals(0, a.getRequirementMap().size());
+                });
+    }
+
 }
