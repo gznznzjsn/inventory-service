@@ -1,5 +1,7 @@
 package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
+import com.gznznzjsn.common.command.EquipmentAssignCommand;
+import com.gznznzjsn.common.event.EquipmentAssignedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.command.EmployeeRequirementCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
@@ -9,9 +11,7 @@ import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentOwnerAddedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
 import com.gznznzjsn.inventoryservice.core.model.Specialization;
 import com.gznznzjsn.inventoryservice.core.model.exception.NotEnoughResourcesException;
-import com.gznznzjsn.common.command.EquipmentAssignCommand;
-import com.gznznzjsn.common.event.EquipmentAssignedEvent;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Aggregate
-@Getter
+@Data
 @NoArgsConstructor
 public class InventoryAggregate {
 
