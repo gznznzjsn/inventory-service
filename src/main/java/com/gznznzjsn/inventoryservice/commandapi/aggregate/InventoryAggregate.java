@@ -9,7 +9,6 @@ import com.gznznzjsn.inventoryservice.commandapi.event.EmployeeRequirementCreate
 import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentOwnerAddedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
-import com.gznznzjsn.inventoryservice.core.model.Specialization;
 import com.gznznzjsn.inventoryservice.core.model.exception.NotEnoughResourcesException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,7 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.modelling.command.AggregateMember;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,24 +95,46 @@ public class InventoryAggregate {
 
     /**
      * Checks availability of
-     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}, which has
+     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}, finds
+     * appropriate {@link EquipmentEntity} with null owner id, which has
      * requested
-     * {@link Specialization} and applies {@link EquipmentAssignedEvent},
+     * {@link com.gznznzjsn.inventoryservice.core.model.Specialization}
+     * and applies {@link EquipmentOwnerAddedEvent},
      * which will assign
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}
      * to owner in current aggregate.
      *
      * @param cmd provides id of target aggregate and
-     *            values to set owner and its {@link Specialization}
+     *            values to set owner and its {@link
+     *            com.gznznzjsn.inventoryservice.core.model.Specialization}
      * @throws NotEnoughResourcesException if requested
      *                                     equipment is not
      *                                     available
      */
     @CommandHandler
     public void handle(final EquipmentAssignCommand cmd) {
-        checkEquipmentAvailability(Specialization.valueOf(
-                cmd.getSpecialization()
-        ));
+        List<EquipmentOwnerAddedEvent> events = new ArrayList<>();
+        requirementMap.values().stream()
+                .filter(
+                        r -> r.getSpecialization().toString()
+                                .equals(cmd.getSpecialization())
+                )
+                .forEach(r -> {
+                    EquipmentEntity equipment = equipmentMap.values().stream()
+                            .filter(e -> e.getName().equals(r.getName())
+                                         && e.getOwnerId() == null)
+                            .findAny().orElseThrow(() ->
+                                    new NotEnoughResourcesException(
+                                            "Not enough equipment for "
+                                            + cmd.getSpecialization()
+                                    )
+                            );
+                    events.add(new EquipmentOwnerAddedEvent(
+                            equipment.getEquipmentId(),
+                            cmd.getOwnerId()
+                    ));
+                });
+        events.forEach(AggregateLifecycle::apply);
         AggregateLifecycle.apply(new EquipmentAssignedEvent(
                 cmd.getOwnerId(),
                 cmd.getSpecialization()
@@ -176,64 +198,16 @@ public class InventoryAggregate {
     }
 
     /**
-     * Handles {@link EquipmentAssignedEvent} extracts {@link Specialization}
-     * from it, finds appropriate {@link EquipmentEntity} with null owner
-     * identity and sets extracted from event identity.
+     * Handles {@link EquipmentOwnerAddedEvent} and adds owner to extracted
+     * from event {@link EquipmentEntity}.
      *
      * @param event provides parameters for successful assignment of {@link
      *              EquipmentEntity}
      */
     @EventSourcingHandler
-    public void on(final EquipmentAssignedEvent event) {
-        List<EmployeeRequirementEntity> requirements = requirementMap
-                .values().stream()
-                .filter(
-                        r -> r.getSpecialization().toString()
-                                .equals(event.getSpecialization())
-                ).toList();
-        List<EquipmentEntity> equipment = equipmentMap.values()
-                .stream().toList();
-        for (
-                int i = 0, j = 0;
-                i < requirements.size() && j < equipment.size();
-                i++
-        ) {
-            while (
-                    !requirements.get(i).getName()
-                            .equals(equipment.get(j).getName())
-                    || equipment.get(j).getOwnerId() != null
-            ) {
-                j++;
-            }
-            UUID equipmentId = equipment.get(j).getEquipmentId();
-            equipmentMap.get(equipmentId).setOwnerId(event.getEmployeeId());
-            AggregateLifecycle.apply(new EquipmentOwnerAddedEvent(
-                    equipmentId,
-                    event.getEmployeeId()
-            ));
-        }
-
-    }
-
-    private void checkEquipmentAvailability(
-            final Specialization specialization
-    ) {
-        requirementMap.values().stream()
-                .filter(r -> r.getSpecialization()
-                        .equals(specialization))
-                .forEach(r -> {
-                    if (equipmentMap.values()
-                            .stream()
-                            .noneMatch(
-                                    e -> e.getName()
-                                                 .equals(r.getName())
-                                         && e.getOwnerId() == null)
-                    ) {
-                        throw new NotEnoughResourcesException(
-                                "Not enough equipment for " + specialization
-                        );
-                    }
-                });
+    public void on(final EquipmentOwnerAddedEvent event) {
+        equipmentMap.get(event.getEquipmentId())
+                .setOwnerId(event.getOwnerId());
     }
 
 }

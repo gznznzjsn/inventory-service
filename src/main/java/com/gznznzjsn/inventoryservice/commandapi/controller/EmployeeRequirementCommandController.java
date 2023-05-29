@@ -16,8 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/inventory-api/v1/"
-                + "inventories/{inventoryId}/"
+@RequestMapping("/inventory-api/v1/inventories/{inventoryId}/"
                 + "employee-requirements")
 public class EmployeeRequirementCommandController {
 
@@ -28,10 +27,9 @@ public class EmployeeRequirementCommandController {
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}.
      *
      * @param dto         provides values to initialize
-     *                    {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
-     *                    fields.
+     *                    entity  fields
      * @param inventoryId id of target aggregate, which will store created
-     *                    {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
+     *                    entity
      * @return {@link Mono} with {@link UUID} of target aggregate
      */
     @PostMapping

@@ -1,6 +1,7 @@
 package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.axonframework.modelling.command.EntityId;
 
 import java.util.UUID;
