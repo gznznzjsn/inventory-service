@@ -14,6 +14,7 @@ public class EquipmentCreateCommand {
 
     @TargetAggregateIdentifier
     private UUID inventoryId;
+    private UUID equipmentId;
     private String name;
 
 }

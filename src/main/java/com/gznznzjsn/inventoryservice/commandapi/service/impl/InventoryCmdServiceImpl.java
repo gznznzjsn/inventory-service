@@ -17,7 +17,9 @@ public class InventoryCmdServiceImpl implements InventoryCmdService {
 
     @Override
     public Mono<UUID> create(final InventoryCreateCommand command) {
-        return gateway.send(command);
+        return Mono.just(command)
+                .doOnNext(c -> c.setInventoryId(UUID.randomUUID()))
+                .flatMap(gateway::send);
     }
 
 }

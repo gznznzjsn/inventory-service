@@ -17,7 +17,9 @@ public class EquipmentCmdServiceImpl implements EquipmentCmdService {
 
     @Override
     public Mono<UUID> create(final EquipmentCreateCommand command) {
-        return gateway.send(command);
+        return Mono.just(command)
+                .doOnNext(c -> c.setEquipmentId(UUID.randomUUID()))
+                .flatMap(gateway::send);
     }
 
 }

@@ -50,7 +50,7 @@ public class InventoryAggregate {
     @CommandHandler
     public InventoryAggregate(final InventoryCreateCommand cmd) {
         AggregateLifecycle.apply(new InventoryCreatedEvent(
-                UUID.randomUUID()
+                cmd.getInventoryId()
         ));
     }
 
@@ -67,7 +67,7 @@ public class InventoryAggregate {
     public void handle(final EmployeeRequirementCreateCommand cmd) {
         AggregateLifecycle.apply(new EmployeeRequirementCreatedEvent(
                 this.inventoryId,
-                UUID.randomUUID(),
+                cmd.getRequirementId(),
                 cmd.getSpecialization(),
                 cmd.getName()
         ));
@@ -78,17 +78,17 @@ public class InventoryAggregate {
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}
      * in current aggregate.
      *
-     * @param command provides id of target aggregate and
-     *                values to initialize
-     *                {@link
-     *                com.gznznzjsn.inventoryservice.core.model.Equipment}
+     * @param cmd provides id of target aggregate and
+     *            values to initialize
+     *            {@link
+     *            com.gznznzjsn.inventoryservice.core.model.Equipment}
      */
     @CommandHandler
-    public void handle(final EquipmentCreateCommand command) {
+    public void handle(final EquipmentCreateCommand cmd) {
         AggregateLifecycle.apply(new EquipmentCreatedEvent(
                 this.inventoryId,
-                UUID.randomUUID(),
-                command.getName(),
+                cmd.getEquipmentId(),
+                cmd.getName(),
                 null
         ));
     }
@@ -102,20 +102,20 @@ public class InventoryAggregate {
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}
      * to owner in current aggregate.
      *
-     * @param command provides id of target aggregate and
-     *                values to set owner and its {@link Specialization}
+     * @param cmd provides id of target aggregate and
+     *            values to set owner and its {@link Specialization}
      * @throws NotEnoughResourcesException if requested
      *                                     equipment is not
      *                                     available
      */
     @CommandHandler
-    public void handle(final EquipmentAssignCommand command) {
+    public void handle(final EquipmentAssignCommand cmd) {
         checkEquipmentAvailability(Specialization.valueOf(
-                command.getSpecialization()
+                cmd.getSpecialization()
         ));
         AggregateLifecycle.apply(new EquipmentAssignedEvent(
-                command.getOwnerId(),
-                command.getSpecialization()
+                cmd.getOwnerId(),
+                cmd.getSpecialization()
         ));
     }
 

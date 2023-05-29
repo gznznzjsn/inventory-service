@@ -1,9 +1,16 @@
 package com.gznznzjsn.inventoryservice.commandapi.command;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
-@JsonInclude
+@NoArgsConstructor
+@AllArgsConstructor
 public class InventoryCreateCommand {
+
+    private UUID inventoryId;
+
 }

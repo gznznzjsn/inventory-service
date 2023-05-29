@@ -23,14 +23,15 @@ public class EmployeeRequirementCommandController {
 
     private final EmployeeRequirementCmdService requirementService;
 
-    /** With the help of {@link EmployeeRequirementCmdService} creates
+    /**
+     * With the help of {@link EmployeeRequirementCmdService} creates
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}.
      *
-     * @param dto provides values to initialize
-     * {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
-     *            fields.
+     * @param dto         provides values to initialize
+     *                    {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
+     *                    fields.
      * @param inventoryId id of target aggregate, which will store created
-     * {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
+     *                    {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
      * @return {@link Mono} with {@link UUID} of target aggregate
      */
     @PostMapping
@@ -41,6 +42,7 @@ public class EmployeeRequirementCommandController {
         return requirementService.create(
                 new EmployeeRequirementCreateCommand(
                         inventoryId,
+                        null,
                         dto.specialization(),
                         dto.name()
                 )
