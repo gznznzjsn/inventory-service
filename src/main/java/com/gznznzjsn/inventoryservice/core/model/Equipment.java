@@ -24,6 +24,8 @@ public class Equipment implements Persistable<UUID> {
     private UUID id;
     private Inventory inventory;
     private String name;
+    private String manufacturer;
+    private String description;
     private Employee owner;
 
     @Transient

@@ -38,7 +38,9 @@ public class EquipmentCommandController {
         return equipmentService.create(
                 new EquipmentCreateCommand(
                         inventoryId,
-                        dto.name()
+                        dto.name(),
+                        dto.manufacturer(),
+                        dto.description()
                 )
         );
     }

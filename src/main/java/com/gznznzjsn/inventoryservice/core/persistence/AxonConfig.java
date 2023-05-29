@@ -1,10 +1,5 @@
 package com.gznznzjsn.inventoryservice.core.persistence;
 
-
-import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequirementReadConverter;
-import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequirementWriteConverter;
-import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentReadConverter;
-import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentWriteConverter;
 import com.mongodb.client.MongoClient;
 import org.axonframework.config.EventProcessingConfigurer;
 import org.axonframework.eventhandling.TrackingEventProcessorConfiguration;
@@ -19,34 +14,12 @@ import org.axonframework.spring.config.SpringAxonConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.r2dbc.convert.R2dbcCustomConversions;
-import org.springframework.data.r2dbc.dialect.MySqlDialect;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
-public class RepositoryConfig {
+public class AxonConfig {
 
     /**
-     * Collects all custom converters and registers list of them
-     * in new instance of {@link R2dbcCustomConversions}.
-     *
-     * @return {@link R2dbcCustomConversions} with all
-     * registered custom converters.
-     */
-    @Bean
-    public R2dbcCustomConversions customConversions() {
-        List<Converter<?, ?>> converters = new ArrayList<>();
-        converters.add(new EmployeeRequirementReadConverter());
-        converters.add(new EmployeeRequirementWriteConverter());
-        converters.add(new EquipmentReadConverter());
-        converters.add(new EquipmentWriteConverter());
-        return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, converters);
-    }
-
-    /**Adds {@link org.axonframework.eventhandling.TrackingToken} to
+     * Adds {@link org.axonframework.eventhandling.TrackingToken} to
      * {@link TrackingEventProcessorConfiguration} and registers it.
      *
      * @param configurer registers new configuration
@@ -66,7 +39,8 @@ public class RepositoryConfig {
         );
     }
 
-    /**Sets MongoDB as EventStorage and configures Serializers for it.
+    /**
+     * Sets MongoDB as EventStorage and configures Serializers for it.
      *
      * @param client provides info about database
      * @return EventStorageEngine configured to store events in MongoDB
@@ -84,12 +58,14 @@ public class RepositoryConfig {
                 .build();
     }
 
-    /**Configures {@link EmbeddedEventStore}.
+    /**
+     * Configures {@link EmbeddedEventStore}.
      *
-     * @param engine is used as {@link EventStorageEngine} for
-     * {@link EmbeddedEventStore}
+     * @param engine        is used as {@link EventStorageEngine} for
+     *                      {@link EmbeddedEventStore}
      * @param configuration is used for
-     * {@link org.axonframework.monitoring.MessageMonitor} creation
+     *                      {@link org.axonframework.monitoring.MessageMonitor}
+     *                      creation
      * @return {@link EmbeddedEventStore} with configured storage engine and
      * {@link org.axonframework.monitoring.MessageMonitor}
      */

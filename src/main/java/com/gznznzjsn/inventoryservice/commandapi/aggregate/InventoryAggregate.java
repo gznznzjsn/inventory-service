@@ -37,12 +37,13 @@ public class InventoryAggregate {
     @AggregateMember
     private Map<UUID, EquipmentEntity> equipmentMap;
 
-    /** Handles {@link InventoryCreateCommand} and applies
+    /**
+     * Handles {@link InventoryCreateCommand} and applies
      * {@link InventoryCreatedEvent} to create new aggregate.
      *
-     * @param command indicates, that
-     * {@link com.gznznzjsn.inventoryservice.core.model.Inventory}
-     *               should be created
+     * @param command indicates, that {@link
+     *                com.gznznzjsn.inventoryservice.core.model.Inventory}
+     *                should be created
      */
     @CommandHandler
     public InventoryAggregate(final InventoryCreateCommand command) {
@@ -51,24 +52,27 @@ public class InventoryAggregate {
         ));
     }
 
-    /** Applies {@link EmployeeRequirementCreatedEvent}, which will create
+    /**
+     * Applies {@link EmployeeRequirementCreatedEvent}, which will create
      * {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
      * in current aggregate.
      *
-     * @param command provides id of target aggregate and values to initialize
-     * {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
+     * @param cmd provides id of target aggregate
+     *            and values to initialize {@link
+     *            com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
      */
     @CommandHandler
-    public void handle(final EmployeeRequirementCreateCommand command) {
+    public void handle(final EmployeeRequirementCreateCommand cmd) {
         AggregateLifecycle.apply(new EmployeeRequirementCreatedEvent(
                 this.inventoryId,
                 UUID.randomUUID(),
-                command.getSpecialization(),
-                command.getName()
+                cmd.getSpecialization(),
+                cmd.getName()
         ));
     }
 
-    /** Applies {@link EquipmentCreatedEvent}, which will create
+    /**
+     * Applies {@link EquipmentCreatedEvent}, which will create
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}
      * in current aggregate.
      *
@@ -83,11 +87,14 @@ public class InventoryAggregate {
                 this.inventoryId,
                 UUID.randomUUID(),
                 command.getName(),
+                command.getManufacturer(),
+                command.getDescription(),
                 null
         ));
     }
 
-    /** Checks availability of
+    /**
+     * Checks availability of
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}, which has
      * requested
      * {@link Specialization} and applies {@link EquipmentAssignedEvent},
@@ -97,9 +104,6 @@ public class InventoryAggregate {
      *
      * @param command provides id of target aggregate and
      *                values to set owner and its {@link Specialization}
-     * @throws NotEnoughResourcesException if requested
-     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment} is not
-     * available
      */
     @CommandHandler
     public void handle(final EquipmentAssignCommand command) {
@@ -112,12 +116,13 @@ public class InventoryAggregate {
         ));
     }
 
-    /**Handles {@link InventoryCreatedEvent} extracts id of aggregate and
+    /**
+     * Handles {@link InventoryCreatedEvent} extracts id of aggregate and
      * all fields of new
      * {@link InventoryAggregate}.
      *
      * @param event indicates, that
-     * {@link InventoryAggregate} should be
+     *              {@link InventoryAggregate} should be
      *              created and provides id for it
      */
     @EventSourcingHandler
@@ -127,12 +132,13 @@ public class InventoryAggregate {
         this.equipmentMap = new HashMap<>();
     }
 
-    /**Handles {@link EmployeeRequirementCreatedEvent} extracts all fields from
+    /**
+     * Handles {@link EmployeeRequirementCreatedEvent} extracts all fields from
      * it, initializes all fields of {@link EmployeeRequirementEntity} and
      * adds it to current aggregate.
      *
      * @param event provides fields for new instance of
-     * {@link EmployeeRequirementEntity}
+     *              {@link EmployeeRequirementEntity}
      */
     @EventSourcingHandler
     public void on(final EmployeeRequirementCreatedEvent event) {
@@ -146,12 +152,13 @@ public class InventoryAggregate {
         );
     }
 
-    /**Handles {@link EquipmentCreatedEvent} extracts all fields from
+    /**
+     * Handles {@link EquipmentCreatedEvent} extracts all fields from
      * it, initializes all fields of {@link EquipmentEntity} and
      * adds it to current aggregate.
      *
      * @param event provides fields for new instance of
-     * {@link EquipmentEntity}
+     *              {@link EquipmentEntity}
      */
     @EventSourcingHandler
     public void on(final EquipmentCreatedEvent event) {
@@ -160,17 +167,20 @@ public class InventoryAggregate {
                 new EquipmentEntity(
                         event.getEquipmentId(),
                         event.getName(),
+                        event.getManufacturer(),
+                        event.getDescription(),
                         event.getOwnerId()
                 )
         );
     }
 
-    /**Handles {@link EquipmentAssignedEvent} extracts {@link Specialization}
+    /**
+     * Handles {@link EquipmentAssignedEvent} extracts {@link Specialization}
      * from it, finds appropriate {@link EquipmentEntity} with null owner
      * identity and sets extracted from event identity.
      *
      * @param event provides parameters for successful assignment of {@link
-     * EquipmentEntity}
+     *              EquipmentEntity}
      */
     @EventSourcingHandler
     public void on(final EquipmentAssignedEvent event) {
@@ -178,7 +188,7 @@ public class InventoryAggregate {
                 .values().stream()
                 .filter(
                         r -> r.getSpecialization().toString()
-                        .equals(event.getSpecialization())
+                                .equals(event.getSpecialization())
                 ).toList();
         List<EquipmentEntity> equipment = equipmentMap.values()
                 .stream().toList();
@@ -189,8 +199,8 @@ public class InventoryAggregate {
         ) {
             while (
                     !requirements.get(i).getName()
-                    .equals(equipment.get(j).getName())
-                   || equipment.get(j).getOwnerId() != null
+                            .equals(equipment.get(j).getName())
+                    || equipment.get(j).getOwnerId() != null
             ) {
                 j++;
             }

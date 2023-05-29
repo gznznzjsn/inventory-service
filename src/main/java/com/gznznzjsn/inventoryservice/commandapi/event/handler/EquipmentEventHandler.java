@@ -20,13 +20,14 @@ public class EquipmentEventHandler {
 
     private final EquipmentRepository repository;
 
-    /**Handles {@link EquipmentCreatedEvent} extracts all fields from
+    /**
+     * Handles {@link EquipmentCreatedEvent} extracts all fields from
      * it, initializes all fields of
      * {@link Equipment} and
      * saves it to {@link EquipmentRepository}.
      *
      * @param event provides fields for new instance of
-     * {@link Equipment}
+     *              {@link Equipment}
      */
     @EventHandler
     public void on(final EquipmentCreatedEvent event) {
@@ -40,12 +41,15 @@ public class EquipmentEventHandler {
                                 .id(e.getInventoryId())
                                 .build())
                         .name(e.getName())
+                        .manufacturer(e.getManufacturer())
+                        .description(e.getDescription())
                         .isNew(true)
                         .build()))
                 .subscribe();
     }
 
-    /**Handles {@link EquipmentOwnerAddedEvent} extracts
+    /**
+     * Handles {@link EquipmentOwnerAddedEvent} extracts
      * {@link Equipment} identity, owner identity, finds {@link Equipment} and
      * sets owner.
      *
@@ -66,7 +70,8 @@ public class EquipmentEventHandler {
                 .subscribe();
     }
 
-    /**Finds {@link Equipment} by its identity.
+    /**
+     * Finds {@link Equipment} by its identity.
      *
      * @param equipmentId identity of required {@link Equipment}
      * @return {@link Mono} with found {@link Equipment}
