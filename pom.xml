@@ -22,10 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -40,11 +37,12 @@ SOFTWARE.
     <description>inventory-service</description>
 
     <properties>
+        <start-class>com.gznznzjsn.inventoryservice.InventoryServiceApplication</start-class>
         <java.version>19</java.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <r2dbc.postgresql.version>1.0.1.RELEASE</r2dbc.postgresql.version>
-        <liquibase.version>4.18.0</liquibase.version>
+        <liquibase.version>4.20.0</liquibase.version>
     </properties>
 
     <dependencies>
@@ -82,6 +80,32 @@ SOFTWARE.
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+            <version>5.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>co.elastic.clients</groupId>
+            <artifactId>elasticsearch-java</artifactId>
+            <version>8.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.17.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.5.4</version>
@@ -115,7 +139,7 @@ SOFTWARE.
         <dependency>
             <groupId>org.axonframework.extensions.mongo</groupId>
             <artifactId>axon-mongo</artifactId>
-            <version>4.5</version>
+            <version>4.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -191,6 +215,25 @@ SOFTWARE.
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
                             <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                             <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>au.com.acegi</groupId>
+                <artifactId>xml-format-maven-plugin</artifactId>
+                <version>3.2.2</version>
+                <executions>
+                    <execution>
+                        <id>xml-format</id>
+                        <goals>
+                            <goal>xml-check</goal>
+                        </goals>
+                        <configuration>
+                            <indentSize>4</indentSize>
+                            <keepBlankLines>true</keepBlankLines>
+                            <lineEnding>LF</lineEnding>
+                            <includes>pom.xml</includes>
                         </configuration>
                     </execution>
                 </executions>

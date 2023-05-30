@@ -16,5 +16,7 @@ public class EquipmentCreateCommand {
     private UUID inventoryId;
     private UUID equipmentId;
     private String name;
+    private String manufacturer;
+    private String description;
 
 }

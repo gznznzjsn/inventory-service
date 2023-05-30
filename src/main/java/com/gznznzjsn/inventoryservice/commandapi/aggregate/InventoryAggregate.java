@@ -89,6 +89,8 @@ public class InventoryAggregate {
                 this.inventoryId,
                 cmd.getEquipmentId(),
                 cmd.getName(),
+                command.getManufacturer(),
+                command.getDescription(),
                 null
         ));
     }
@@ -192,6 +194,8 @@ public class InventoryAggregate {
                 new EquipmentEntity(
                         event.getEquipmentId(),
                         event.getName(),
+                        event.getManufacturer(),
+                        event.getDescription(),
                         event.getOwnerId()
                 )
         );

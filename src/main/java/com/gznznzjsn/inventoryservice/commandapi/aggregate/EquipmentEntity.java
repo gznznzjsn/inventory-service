@@ -13,6 +13,8 @@ public class EquipmentEntity {
     @EntityId
     private UUID equipmentId;
     private String name;
+    private String manufacturer;
+    private String description;
     private UUID ownerId;
 
 }

@@ -22,6 +22,8 @@ public class EquipmentReadConverter implements Converter<Row, Equipment> {
                         .build()
                 )
                 .name(source.get("equipment_name", String.class))
+                .manufacturer(source.get("manufacturer", String.class))
+                .description(source.get("description", String.class))
                 .owner(Employee.builder()
                         .id(source.get("owner_id", UUID.class))
                         .build())

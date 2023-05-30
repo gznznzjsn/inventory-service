@@ -43,7 +43,9 @@ public class EquipmentCommandController {
                 new EquipmentCreateCommand(
                         inventoryId,
                         null,
-                        dto.name()
+                        dto.name(),
+                        dto.manufacturer(),
+                        dto.description()
                 )
         );
     }
