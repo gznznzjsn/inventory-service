@@ -14,7 +14,7 @@ public class EquipmentAssignCommand {
 
     /**
      * Identity of target {@link
-     * com.gznznzjsn.inventoryservice.commandapi.aggregate.InventoryAggregate}.
+    com.gznznzjsn.inventoryservice.commandapi.aggregate.InventoryAggregate}.
      */
     @TargetAggregateIdentifier
     private UUID inventoryId;

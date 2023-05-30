@@ -2,12 +2,12 @@ package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
 import com.gznznzjsn.inventoryservice.core.model.Specialization;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import org.axonframework.modelling.command.EntityId;
 
 import java.util.UUID;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class EmployeeRequirementEntity {
 

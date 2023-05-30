@@ -18,7 +18,9 @@ public class EmployeeRequirementCmdServiceImpl
 
     @Override
     public Mono<UUID> create(final EmployeeRequirementCreateCommand command) {
-        return gateway.send(command);
+        return Mono.just(command)
+                .doOnNext(c -> c.setRequirementId(UUID.randomUUID()))
+                .flatMap(gateway::send);
     }
 
 }

@@ -15,6 +15,7 @@ public class EmployeeRequirementCreateCommand {
 
     @TargetAggregateIdentifier
     private UUID inventoryId;
+    private UUID requirementId;
     private Specialization specialization;
     private String name;
 
