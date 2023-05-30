@@ -188,6 +188,7 @@ SOFTWARE.
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
                             <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                             <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
                         </configuration>
