@@ -89,8 +89,8 @@ public class InventoryAggregate {
                 this.inventoryId,
                 cmd.getEquipmentId(),
                 cmd.getName(),
-                command.getManufacturer(),
-                command.getDescription(),
+                cmd.getManufacturer(),
+                cmd.getDescription(),
                 null
         ));
     }

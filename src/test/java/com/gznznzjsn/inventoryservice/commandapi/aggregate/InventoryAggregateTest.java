@@ -115,17 +115,23 @@ class InventoryAggregateTest {
         UUID equipmentId =
                 UUID.fromString("8f89c40e-fe0d-11ed-be56-0242ac120002");
         String name = "FAKE NAME";
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(new InventoryCreatedEvent(inventoryId))
                 .when(new EquipmentCreateCommand(
                         inventoryId,
                         equipmentId,
-                        name
+                        name,
+                        manufacturer,
+                        description
                 ))
                 .expectSuccessfulHandlerExecution()
                 .expectEvents(new EquipmentCreatedEvent(
                         inventoryId,
                         equipmentId,
                         name,
+                        manufacturer,
+                        description,
                         null
                 ));
     }
@@ -137,18 +143,28 @@ class InventoryAggregateTest {
         UUID equipmentId =
                 UUID.fromString("8f89c40e-fe0d-11ed-be56-0242ac120002");
         String name = "FAKE NAME";
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(new InventoryCreatedEvent(inventoryId))
                 .when(new EquipmentCreateCommand(
                         inventoryId,
                         equipmentId,
-                        name
+                        name,
+                        manufacturer,
+                        description
                 ))
                 .expectState(a -> {
                     assertEquals(inventoryId, a.getInventoryId());
                     assertNotNull(a.getEquipmentMap());
                     assertEquals(1, a.getEquipmentMap().size());
                     assertEquals(
-                            new EquipmentEntity(equipmentId, name, null),
+                            new EquipmentEntity(
+                                    equipmentId,
+                                    name,
+                                    manufacturer,
+                                    description,
+                                    null
+                            ),
                             a.getEquipmentMap().get(equipmentId)
                     );
                     assertNotNull(a.getRequirementMap());
@@ -166,18 +182,24 @@ class InventoryAggregateTest {
                 UUID.fromString("289ac0b7-d5d9-4f80-908d-efa0571a8179");
         UUID secondEquipmentId =
                 UUID.fromString("1252b098-7784-4598-bfb3-1d50bdb3801a");
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 firstEquipmentId,
                                 "hammer",
+                                manufacturer,
+                                description,
                                 null
                         ),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 secondEquipmentId,
                                 "shovel",
+                                manufacturer,
+                                description,
                                 null
                         )
                 )
@@ -200,18 +222,24 @@ class InventoryAggregateTest {
                 UUID.fromString("289ac0b7-d5d9-4f80-908d-efa0571a8179");
         UUID secondEquipmentId =
                 UUID.fromString("1252b098-7784-4598-bfb3-1d50bdb3801a");
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 firstEquipmentId,
                                 "hammer",
+                                manufacturer,
+                                description,
                                 null
                         ),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 secondEquipmentId,
                                 "shovel",
+                                manufacturer,
+                                description,
                                 null
                         )
                 )
@@ -240,18 +268,24 @@ class InventoryAggregateTest {
                 UUID.fromString("73ba3fbf-0738-4700-94b2-04ea02cf7114");
         UUID secondEmployeeId =
                 UUID.fromString("69f9995e-8d8e-4148-a2fc-a554ce40e5b4");
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 firstEquipmentId,
                                 "hammer",
+                                manufacturer,
+                                description,
                                 firstEmployeeId
                         ),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 secondEquipmentId,
                                 "shovel",
+                                manufacturer,
+                                description,
                                 secondEmployeeId
                         )
                 )
@@ -278,18 +312,24 @@ class InventoryAggregateTest {
                 UUID.fromString("73ba3fbf-0738-4700-94b2-04ea02cf7114");
         UUID secondEmployeeId =
                 UUID.fromString("69f9995e-8d8e-4148-a2fc-a554ce40e5b4");
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 firstEquipmentId,
                                 "hammer",
+                                manufacturer,
+                                description,
                                 firstEmployeeId
                         ),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 secondEquipmentId,
                                 "shovel",
+                                manufacturer,
+                                description,
                                 secondEmployeeId
                         )
                 )
@@ -326,6 +366,8 @@ class InventoryAggregateTest {
                 UUID.fromString("73ba3fbf-0738-4700-94b2-04ea02cf7114");
         UUID secondRequirementId =
                 UUID.fromString("69f9995e-8d8e-4148-a2fc-a554ce40e5b4");
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
                         new EmployeeRequirementCreatedEvent(
@@ -344,12 +386,16 @@ class InventoryAggregateTest {
                                 inventoryId,
                                 firstEquipmentId,
                                 "hammer",
+                                manufacturer,
+                                description,
                                 null
                         ),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 secondEquipmentId,
                                 "shovel",
+                                manufacturer,
+                                description,
                                 null
                         )
                 )
@@ -390,6 +436,8 @@ class InventoryAggregateTest {
                 UUID.fromString("73ba3fbf-0738-4700-94b2-04ea02cf7114");
         UUID secondRequirementId =
                 UUID.fromString("69f9995e-8d8e-4148-a2fc-a554ce40e5b4");
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
                         new EmployeeRequirementCreatedEvent(
@@ -408,12 +456,16 @@ class InventoryAggregateTest {
                                 inventoryId,
                                 firstEquipmentId,
                                 "hammer",
+                                manufacturer,
+                                description,
                                 null
                         ),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 secondEquipmentId,
                                 "shovel",
+                                manufacturer,
+                                description,
                                 null
                         )
                 )
@@ -452,6 +504,8 @@ class InventoryAggregateTest {
                 UUID.fromString("69f9995e-8d8e-4148-a2fc-a554ce40e5b4");
         UUID firstEmployeeId =
                 UUID.fromString("fa97215b-b234-4724-abd7-c8e7a700e67b");
+        String manufacturer = "FAKE MANUFACTURER";
+        String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
                         new EmployeeRequirementCreatedEvent(
@@ -470,11 +524,15 @@ class InventoryAggregateTest {
                                 inventoryId,
                                 firstEquipmentId,
                                 "hammer",
+                                manufacturer,
+                                description,
                                 firstEmployeeId),
                         new EquipmentCreatedEvent(
                                 inventoryId,
                                 secondEquipmentId,
                                 "shovel",
+                                manufacturer,
+                                description,
                                 null
                         )
                 )
