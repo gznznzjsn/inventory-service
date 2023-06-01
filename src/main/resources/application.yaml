@@ -3,11 +3,7 @@ spring:
     name: inventory-service
   data:
     mongodb:
-      authentication-database: ${APP_DATA_MONGODB_AUTHENTICATION-DATABASE}
-      username: ${APP_DATA_MONGODB_USERNAME}
-      password: ${APP_DATA_MONGODB_PASSWORD}
-      port: ${APP_DATA_MONGODB_PORT}
-      host: ${APP_DATA_MONGODB_HOST}
+      uri: mongodb://${APP_DATA_MONGODB_USERNAME}:${APP_DATA_MONGODB_PASSWORD}@${APP_DATA_MONGODB_HOST}:${APP_DATA_MONGODB_PORT}/tasks?authSource=${APP_DATA_MONGODB_AUTHENTICATION-DATABASE}
   jackson:
     default-property-inclusion: NON_NULL
   config:
@@ -25,6 +21,12 @@ spring:
 server:
   port: 8080
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - prometheus
 
 axon:
   serializer:
