@@ -1,0 +1,13 @@
+type Query {
+    getEquipmentById(id: ID!): Equipment
+}
+
+type Mutation {
+    createEquipment(
+        name: String!
+        manufacturer: String!
+        description: String!
+        ownerId: ID
+    ): Equipment
+    createInventory: String
+}

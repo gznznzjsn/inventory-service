@@ -1,0 +1,30 @@
+type Equipment {
+    id: ID!
+    inventory: Inventory!
+    name: String!
+    manufacturer: String!
+    description: String!
+    owner: Employee
+}
+
+type Employee {
+    id: ID!
+    glossary: Glossary
+    name: String
+    specialization: Specialization
+}
+
+type Inventory {
+    id: ID!
+}
+
+
+type Glossary {
+    id: ID!
+}
+
+enum Specialization{
+    CLEANER,
+    REPAIRER,
+    INSPECTOR
+}

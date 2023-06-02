@@ -5,12 +5,15 @@ import com.gznznzjsn.inventoryservice.core.web.dto.mapper.EquipmentMapper;
 import com.gznznzjsn.inventoryservice.queryapi.query.GetEquipmentAutocompleteQuery;
 import com.gznznzjsn.inventoryservice.queryapi.service.EquipmentQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
@@ -39,7 +42,7 @@ public class EquipmentQueryController {
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}
      */
     @GetMapping("/autocomplete")
-    public Flux<EquipmentDto> get(
+    public Flux<EquipmentDto> getAutocomplete(
             final @PathVariable UUID inventoryId,
             final @RequestParam Integer from,
             final @RequestParam Integer size,
@@ -50,6 +53,19 @@ public class EquipmentQueryController {
                         inventoryId, from, size, query
                 ))
                 .map(mapper::toDto);
+    }
+
+    @QueryMapping
+    public Mono<EquipmentDto> getEquipmentById(
+            final @Argument UUID id
+    ) {
+        return Mono.just(new EquipmentDto(
+                id,
+                "NNN",
+                "MMM",
+                "DDD",
+                null
+        ));
     }
 
 }
