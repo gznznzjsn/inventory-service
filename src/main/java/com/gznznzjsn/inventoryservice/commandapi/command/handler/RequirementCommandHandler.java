@@ -1,7 +1,6 @@
 package com.gznznzjsn.inventoryservice.commandapi.command.handler;
 
 import com.gznznzjsn.inventoryservice.commandapi.command.RequirementCreateCommand;
-import com.gznznzjsn.inventoryservice.commandapi.event.RequirementCreatedEvent;
 import com.gznznzjsn.inventoryservice.core.model.Requirement;
 
 public interface RequirementCommandHandler {

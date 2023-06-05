@@ -10,4 +10,5 @@ type Mutation {
         ownerId: ID
     ): Equipment
     createInventory: String
+    deleteInventory(id: ID!): Boolean
 }

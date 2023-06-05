@@ -1,12 +1,8 @@
 package com.gznznzjsn.inventoryservice.commandapi.command.handler;
 
 import com.gznznzjsn.common.command.EquipmentAssignCommand;
-import com.gznznzjsn.inventoryservice.commandapi.aggregate.EquipmentEntity;
 import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
-import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentCreatedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentOwnerAddedEvent;
 import com.gznznzjsn.inventoryservice.core.model.exception.NotEnoughResourcesException;
-import org.axonframework.commandhandling.CommandHandler;
 
 public interface EquipmentCommandHandler {
 

@@ -1,10 +1,8 @@
 package com.gznznzjsn.inventoryservice.commandapi.event.sourcing;
 
 import com.gznznzjsn.inventoryservice.commandapi.aggregate.InventoryAggregate;
-import com.gznznzjsn.inventoryservice.commandapi.aggregate.RequirementEntity;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryDeletedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.event.RequirementCreatedEvent;
 
 public interface InventorySourcingHandler {
 
