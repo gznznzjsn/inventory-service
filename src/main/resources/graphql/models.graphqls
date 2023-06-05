@@ -8,7 +8,7 @@ type Equipment {
 }
 
 type Employee {
-    id: ID!
+    id: ID
     glossary: Glossary
     name: String
     specialization: Specialization

@@ -1,4 +1,10 @@
 type Query {
+    getEquipmentWithAutocomplete(
+        inventoryId: String
+        from: Int
+        size: Int
+        query: String
+    ): [Equipment!]
     getEquipmentById(id: ID!): Equipment
 }
 
