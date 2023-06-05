@@ -12,7 +12,7 @@ public interface InventoryCommandHandler {
      *            {@link com.gznznzjsn.inventoryservice.core.model.Inventory}
      *            should be created
      */
-    void handle(final InventoryCreateCommand cmd) throws Exception;
+    void handle(final InventoryCreateCommand cmd);
 
     void handle(InventoryDeleteCommand cmd);
 

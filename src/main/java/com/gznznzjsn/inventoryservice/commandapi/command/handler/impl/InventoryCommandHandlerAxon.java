@@ -7,6 +7,7 @@ import com.gznznzjsn.inventoryservice.commandapi.command.handler.InventoryComman
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryDeletedEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.modelling.command.Repository;
@@ -19,8 +20,9 @@ public class InventoryCommandHandlerAxon implements InventoryCommandHandler {
     private final Repository<InventoryAggregate> repository;
 
     @Override
+    @SneakyThrows
     @CommandHandler(routingKey = "inventoryId")
-    public void handle(final InventoryCreateCommand cmd) throws Exception {
+    public void handle(final InventoryCreateCommand cmd) {
         repository.loadOrCreate(
                         cmd.getInventoryId().toString(),
                         InventoryAggregate::new

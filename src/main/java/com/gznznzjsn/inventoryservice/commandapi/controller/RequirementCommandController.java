@@ -16,8 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/inventory-api/v1/inventories/{inventoryId}/"
-                + "employee-requirements")
+@RequestMapping("/inventory-api/v1/inventories/{inventoryId}/requirements")
 public class RequirementCommandController {
 
     private final RequirementCmdService requirementService;
