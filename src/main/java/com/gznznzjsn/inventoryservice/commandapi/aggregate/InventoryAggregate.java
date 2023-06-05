@@ -2,13 +2,12 @@ package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
 import com.gznznzjsn.common.command.EquipmentAssignCommand;
 import com.gznznzjsn.common.event.EquipmentAssignedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.command.EmployeeRequirementCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.command.RequirementCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
-import com.gznznzjsn.inventoryservice.commandapi.event.EmployeeRequirementCreatedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentCreatedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentOwnerAddedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.command.InventoryDeleteCommand;
+import com.gznznzjsn.inventoryservice.commandapi.event.*;
+import com.gznznzjsn.inventoryservice.core.model.Requirement;
 import com.gznznzjsn.inventoryservice.core.model.exception.NotEnoughResourcesException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +33,7 @@ public class InventoryAggregate {
     private UUID inventoryId;
 
     @AggregateMember
-    private Map<UUID, EmployeeRequirementEntity> requirementMap;
+    private Map<UUID, RequirementEntity> requirementMap;
 
     @AggregateMember
     private Map<UUID, EquipmentEntity> equipmentMap;
@@ -55,17 +54,17 @@ public class InventoryAggregate {
     }
 
     /**
-     * Applies {@link EmployeeRequirementCreatedEvent}, which will create
-     * {@link com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
+     * Applies {@link RequirementCreatedEvent}, which will create
+     * {@link Requirement}
      * in current aggregate.
      *
      * @param cmd provides id of target aggregate and values to initialize
      *            {@link
-     *            com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement}
+     *            Requirement}
      */
     @CommandHandler
-    public void handle(final EmployeeRequirementCreateCommand cmd) {
-        AggregateLifecycle.apply(new EmployeeRequirementCreatedEvent(
+    public void handle(final RequirementCreateCommand cmd) {
+        AggregateLifecycle.apply(new RequirementCreatedEvent(
                 this.inventoryId,
                 cmd.getRequirementId(),
                 cmd.getSpecialization(),
@@ -160,18 +159,18 @@ public class InventoryAggregate {
     }
 
     /**
-     * Handles {@link EmployeeRequirementCreatedEvent} extracts all fields from
-     * it, initializes all fields of {@link EmployeeRequirementEntity} and
+     * Handles {@link RequirementCreatedEvent} extracts all fields from
+     * it, initializes all fields of {@link RequirementEntity} and
      * adds it to current aggregate.
      *
      * @param event provides fields for new instance of
-     *              {@link EmployeeRequirementEntity}
+     *              {@link RequirementEntity}
      */
     @EventSourcingHandler
-    public void on(final EmployeeRequirementCreatedEvent event) {
+    public void on(final RequirementCreatedEvent event) {
         this.requirementMap.put(
                 event.getRequirementId(),
-                new EmployeeRequirementEntity(
+                new RequirementEntity(
                         event.getRequirementId(),
                         event.getSpecialization(),
                         event.getName()

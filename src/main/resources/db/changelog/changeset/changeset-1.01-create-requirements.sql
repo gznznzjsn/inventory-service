@@ -1,11 +1,11 @@
 --liquibase formatted sql
 
---changeset gznznzjsn:create-employee_requirements
-create table employee_requirements
+--changeset gznznzjsn:create-requirements
+create table requirements
 (
-    employee_requirement_id uuid primary key,
+    requirement_id uuid primary key,
     inventory_id            uuid not null references inventories on DELETE cascade,
     specialization          varchar(40) not null,
     equipment_name          varchar(40) not null
 );
---rollback drop table employee_requirements;
+--rollback drop table requirements;

@@ -1,27 +1,27 @@
 package com.gznznzjsn.inventoryservice.core.persistence.converter;
 
-import com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement;
+import com.gznznzjsn.inventoryservice.core.model.Requirement;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.r2dbc.mapping.OutboundRow;
 import org.springframework.r2dbc.core.Parameter;
 
 @WritingConverter
-public class EmployeeRequirementWriteConverter
-        implements Converter<EmployeeRequirement, OutboundRow> {
+public class RequirementWriteConverter
+        implements Converter<Requirement, OutboundRow> {
 
-    /**Converts {@link EmployeeRequirement} to {@link OutboundRow} to pass it to
+    /**Converts {@link Requirement} to {@link OutboundRow} to pass it to
      * SQL query further.
      *
      * @param requirement which will be converted
-     * @return converted {@link EmployeeRequirement}
+     * @return converted {@link Requirement}
      */
     @Override
-    public OutboundRow convert(final EmployeeRequirement requirement) {
+    public OutboundRow convert(final Requirement requirement) {
         OutboundRow row = new OutboundRow();
         if (requirement.getId() != null) {
             row.put(
-                    "employee_requirement_id",
+                    "requirement_id",
                     Parameter.from(requirement.getId())
             );
         }

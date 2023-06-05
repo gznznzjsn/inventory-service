@@ -1,7 +1,7 @@
 package com.gznznzjsn.inventoryservice.core.persistence;
 
-import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequirementReadConverter;
-import com.gznznzjsn.inventoryservice.core.persistence.converter.EmployeeRequirementWriteConverter;
+import com.gznznzjsn.inventoryservice.core.persistence.converter.RequirementReadConverter;
+import com.gznznzjsn.inventoryservice.core.persistence.converter.RequirementWriteConverter;
 import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentReadConverter;
 import com.gznznzjsn.inventoryservice.core.persistence.converter.EquipmentWriteConverter;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +26,8 @@ public class R2dbcConfig {
     @Bean
     public R2dbcCustomConversions customConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
-        converters.add(new EmployeeRequirementReadConverter());
-        converters.add(new EmployeeRequirementWriteConverter());
+        converters.add(new RequirementReadConverter());
+        converters.add(new RequirementWriteConverter());
         converters.add(new EquipmentReadConverter());
         converters.add(new EquipmentWriteConverter());
         return R2dbcCustomConversions.of(PostgresDialect.INSTANCE, converters);

@@ -1,9 +1,9 @@
 package com.gznznzjsn.inventoryservice.commandapi.controller;
 
 
-import com.gznznzjsn.inventoryservice.commandapi.command.EmployeeRequirementCreateCommand;
-import com.gznznzjsn.inventoryservice.commandapi.service.EmployeeRequirementCmdService;
-import com.gznznzjsn.inventoryservice.core.web.dto.EmployeeRequirementDto;
+import com.gznznzjsn.inventoryservice.commandapi.command.RequirementCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.service.RequirementCmdService;
+import com.gznznzjsn.inventoryservice.core.web.dto.RequirementDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +18,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/inventory-api/v1/inventories/{inventoryId}/"
                 + "employee-requirements")
-public class EmployeeRequirementCommandController {
+public class RequirementCommandController {
 
-    private final EmployeeRequirementCmdService requirementService;
+    private final RequirementCmdService requirementService;
 
     /**
-     * With the help of {@link EmployeeRequirementCmdService} creates
+     * With the help of {@link RequirementCmdService} creates
      * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}.
      *
      * @param dto         provides values to initialize
@@ -34,11 +34,11 @@ public class EmployeeRequirementCommandController {
      */
     @PostMapping
     public Mono<UUID> create(
-            final @RequestBody EmployeeRequirementDto dto,
+            final @RequestBody RequirementDto dto,
             final @PathVariable UUID inventoryId
     ) {
         return requirementService.create(
-                new EmployeeRequirementCreateCommand(
+                new RequirementCreateCommand(
                         inventoryId,
                         null,
                         dto.specialization(),

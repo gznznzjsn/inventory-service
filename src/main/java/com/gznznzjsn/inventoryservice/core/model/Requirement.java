@@ -16,11 +16,11 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("employee_requirements")
-public class EmployeeRequirement implements Persistable<UUID> {
+@Table("requirements")
+public class Requirement implements Persistable<UUID> {
 
     @Id
-    @Column("employee_requirement_id")
+    @Column("requirement_id")
     private UUID id;
     private Inventory inventory;
     private Specialization specialization;

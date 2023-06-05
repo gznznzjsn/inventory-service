@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public record EmployeeRequirementDto(
+public record RequirementDto(
 
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         UUID id,

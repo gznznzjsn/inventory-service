@@ -2,10 +2,10 @@ package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
 import com.gznznzjsn.common.command.EquipmentAssignCommand;
 import com.gznznzjsn.common.event.EquipmentAssignedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.command.EmployeeRequirementCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.command.RequirementCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
-import com.gznznzjsn.inventoryservice.commandapi.event.EmployeeRequirementCreatedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.RequirementCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentOwnerAddedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
@@ -62,14 +62,14 @@ class InventoryAggregateTest {
                 UUID.fromString("8f89c40e-fe0d-11ed-be56-0242ac120002");
         String name = "FAKE NAME";
         fixture.given(new InventoryCreatedEvent(inventoryId))
-                .when(new EmployeeRequirementCreateCommand(
+                .when(new RequirementCreateCommand(
                         inventoryId,
                         requirementId,
                         Specialization.CLEANER,
                         name
                 ))
                 .expectSuccessfulHandlerExecution()
-                .expectEvents(new EmployeeRequirementCreatedEvent(
+                .expectEvents(new RequirementCreatedEvent(
                         inventoryId,
                         requirementId,
                         Specialization.CLEANER,
@@ -85,7 +85,7 @@ class InventoryAggregateTest {
                 UUID.fromString("8f89c40e-fe0d-11ed-be56-0242ac120002");
         String name = "FAKE NAME";
         fixture.given(new InventoryCreatedEvent(inventoryId))
-                .when(new EmployeeRequirementCreateCommand(
+                .when(new RequirementCreateCommand(
                         inventoryId,
                         requirementId,
                         Specialization.CLEANER,
@@ -98,7 +98,7 @@ class InventoryAggregateTest {
                     assertNotNull(a.getRequirementMap());
                     assertEquals(1, a.getRequirementMap().size());
                     assertEquals(
-                            new EmployeeRequirementEntity(
+                            new RequirementEntity(
                                     requirementId,
                                     Specialization.CLEANER,
                                     name
@@ -370,13 +370,13 @@ class InventoryAggregateTest {
         String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
-                        new EmployeeRequirementCreatedEvent(
+                        new RequirementCreatedEvent(
                                 inventoryId,
                                 firstRequirementId,
                                 Specialization.CLEANER,
                                 "hammer"
                         ),
-                        new EmployeeRequirementCreatedEvent(
+                        new RequirementCreatedEvent(
                                 inventoryId,
                                 secondRequirementId,
                                 Specialization.CLEANER,
@@ -440,13 +440,13 @@ class InventoryAggregateTest {
         String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
-                        new EmployeeRequirementCreatedEvent(
+                        new RequirementCreatedEvent(
                                 inventoryId,
                                 firstRequirementId,
                                 Specialization.CLEANER,
                                 "hammer"
                         ),
-                        new EmployeeRequirementCreatedEvent(
+                        new RequirementCreatedEvent(
                                 inventoryId,
                                 secondRequirementId,
                                 Specialization.CLEANER,
@@ -508,13 +508,13 @@ class InventoryAggregateTest {
         String description = "FAKE DESCRIPTION";
         fixture.given(
                         new InventoryCreatedEvent(inventoryId),
-                        new EmployeeRequirementCreatedEvent(
+                        new RequirementCreatedEvent(
                                 inventoryId,
                                 firstRequirementId,
                                 Specialization.CLEANER,
                                 "hammer"
                         ),
-                        new EmployeeRequirementCreatedEvent(
+                        new RequirementCreatedEvent(
                                 inventoryId,
                                 secondRequirementId,
                                 Specialization.CLEANER,

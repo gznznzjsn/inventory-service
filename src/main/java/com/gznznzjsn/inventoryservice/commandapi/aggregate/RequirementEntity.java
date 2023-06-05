@@ -1,18 +1,17 @@
-package com.gznznzjsn.inventoryservice.commandapi.event;
+package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
 import com.gznznzjsn.inventoryservice.core.model.Specialization;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.axonframework.modelling.command.EntityId;
 
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeRequirementCreatedEvent {
+public class RequirementEntity {
 
-    private UUID inventoryId;
+    @EntityId
     private UUID requirementId;
     private Specialization specialization;
     private String name;

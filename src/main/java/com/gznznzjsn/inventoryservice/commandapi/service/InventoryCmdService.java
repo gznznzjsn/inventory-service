@@ -1,6 +1,7 @@
 package com.gznznzjsn.inventoryservice.commandapi.service;
 
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.command.InventoryDeleteCommand;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -8,11 +9,13 @@ import java.util.UUID;
 public interface InventoryCmdService {
 
     /**
-     * @param command indicates, that
-     * {@link com.gznznzjsn.inventoryservice.core.model.Inventory} should be
-     *                created
+     * @param cmd indicates, that
+     *            {@link com.gznznzjsn.inventoryservice.core.model.Inventory}
+     *            should be created
      * @return {@link Mono} with {@link UUID} of target aggregate
      */
-    Mono<UUID> create(InventoryCreateCommand command);
+    Mono<UUID> create(InventoryCreateCommand cmd);
+
+    Mono<UUID> delete(InventoryDeleteCommand cmd);
 
 }

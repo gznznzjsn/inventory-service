@@ -1,7 +1,7 @@
 package com.gznznzjsn.inventoryservice.core.persistence.converter;
 
 
-import com.gznznzjsn.inventoryservice.core.model.EmployeeRequirement;
+import com.gznznzjsn.inventoryservice.core.model.Requirement;
 import com.gznznzjsn.inventoryservice.core.model.Inventory;
 import com.gznznzjsn.inventoryservice.core.model.Specialization;
 import io.r2dbc.spi.Row;
@@ -11,13 +11,12 @@ import org.springframework.data.convert.ReadingConverter;
 import java.util.UUID;
 
 @ReadingConverter
-public class EmployeeRequirementReadConverter
-        implements Converter<Row, EmployeeRequirement> {
+public class RequirementReadConverter implements Converter<Row, Requirement> {
 
     @Override
-    public EmployeeRequirement convert(final Row source) {
-        return EmployeeRequirement.builder()
-                .id(source.get("employee_requirement_id", UUID.class))
+    public Requirement convert(final Row source) {
+        return Requirement.builder()
+                .id(source.get("requirement_id", UUID.class))
                 .inventory(Inventory.builder()
                         .id(source.get("inventory_id", UUID.class))
                         .build()

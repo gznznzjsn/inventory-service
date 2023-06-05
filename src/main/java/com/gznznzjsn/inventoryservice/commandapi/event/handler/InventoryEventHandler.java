@@ -2,6 +2,7 @@ package com.gznznzjsn.inventoryservice.commandapi.event.handler;
 
 
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.InventoryDeletedEvent;
 import com.gznznzjsn.inventoryservice.core.model.Inventory;
 import com.gznznzjsn.inventoryservice.core.persistence.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,8 @@ public class InventoryEventHandler {
 
     private final InventoryRepository repository;
 
-    /** Handles {@link InventoryCreatedEvent} and creates {@link Inventory}.
+    /**
+     * Handles {@link InventoryCreatedEvent} and creates {@link Inventory}.
      *
      * @param event provides fields of {@link Inventory}, which need to be
      *              persisted
@@ -28,6 +30,11 @@ public class InventoryEventHandler {
                         .isNew(true)
                         .build()))
                 .subscribe();
+    }
+
+    @EventHandler
+    public void on(final InventoryDeletedEvent event) {
+        repository.deleteById(event.getInventoryId()).subscribe();
     }
 
 }
