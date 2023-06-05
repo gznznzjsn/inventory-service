@@ -5,6 +5,9 @@ import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.service.EquipmentCmdService;
 import com.gznznzjsn.inventoryservice.core.web.dto.EquipmentDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.Arguments;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +41,36 @@ public class EquipmentCommandController {
     public Mono<UUID> create(
             final @RequestBody EquipmentDto dto,
             final @PathVariable UUID inventoryId
+    ) {
+        return equipmentService.create(
+                new EquipmentCreateCommand(
+                        inventoryId,
+                        null,
+                        dto.name(),
+                        dto.manufacturer(),
+                        dto.description()
+                )
+        );
+    }
+
+    /**
+     * Endpoint for GraphQL.
+     * With the help of {@link EquipmentCmdService} creates
+     * {@link com.gznznzjsn.inventoryservice.core.model.Equipment}.
+     *
+     * @param dto         provides values to initialize
+     *                    {@link
+     *                    com.gznznzjsn.inventoryservice.core.model.Equipment}
+     *                    fields.
+     * @param inventoryId id of target aggregate, which will store created
+     *                    {@link
+     *                    com.gznznzjsn.inventoryservice.core.model.Equipment}
+     * @return {@link Mono} with {@link UUID} of target aggregate
+     */
+    @MutationMapping
+    public Mono<UUID> createEquipment(
+            final @Arguments EquipmentDto dto,
+            final @Argument UUID inventoryId
     ) {
         return equipmentService.create(
                 new EquipmentCreateCommand(

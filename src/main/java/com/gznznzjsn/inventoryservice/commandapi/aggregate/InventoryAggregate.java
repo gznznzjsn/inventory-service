@@ -1,6 +1,10 @@
 package com.gznznzjsn.inventoryservice.commandapi.aggregate;
 
-import com.gznznzjsn.inventoryservice.commandapi.event.*;
+import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentCreatedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentOwnerAddedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.InventoryDeletedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.RequirementCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.sourcing.EquipmentSourcingHandler;
 import com.gznznzjsn.inventoryservice.commandapi.event.sourcing.InventorySourcingHandler;
 import com.gznznzjsn.inventoryservice.commandapi.event.sourcing.RequirementSourcingHandler;

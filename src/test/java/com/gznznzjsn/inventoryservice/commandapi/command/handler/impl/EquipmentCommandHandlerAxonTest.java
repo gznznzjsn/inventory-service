@@ -17,8 +17,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static org.axonframework.test.matchers.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.axonframework.test.matchers.Matchers.deepEquals;
+import static org.axonframework.test.matchers.Matchers.listWithAllOf;
+import static org.axonframework.test.matchers.Matchers.payloadsMatching;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class EquipmentCommandHandlerAxonTest {
 

@@ -7,8 +7,13 @@ type Mutation {
         name: String!
         manufacturer: String!
         description: String!
-        ownerId: ID
-    ): Equipment
-    createInventory: String
+        inventoryId: ID!
+    ): Boolean
+    createRequirement(
+        name: String!
+        specialization: Specialization!
+        inventoryId: ID!
+    ): Boolean
+    createInventory: Boolean
     deleteInventory(id: ID!): Boolean
 }
