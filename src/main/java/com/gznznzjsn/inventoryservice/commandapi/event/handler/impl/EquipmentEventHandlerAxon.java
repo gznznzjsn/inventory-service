@@ -6,12 +6,10 @@ import com.gznznzjsn.inventoryservice.commandapi.event.handler.EquipmentEventHan
 import com.gznznzjsn.inventoryservice.core.model.Employee;
 import com.gznznzjsn.inventoryservice.core.model.Equipment;
 import com.gznznzjsn.inventoryservice.core.model.Inventory;
-import com.gznznzjsn.inventoryservice.core.model.exception.ResourceNotFoundException;
 import com.gznznzjsn.inventoryservice.core.persistence.repository.EquipmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
