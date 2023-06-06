@@ -1,8 +1,7 @@
-package com.gznznzjsn.inventoryservice.commandapi.event.handler;
+package com.gznznzjsn.inventoryservice.commandapi.event.handler.impl;
 
 import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.EquipmentOwnerAddedEvent;
-import com.gznznzjsn.inventoryservice.commandapi.event.handler.impl.EquipmentEventHandlerAxon;
 import com.gznznzjsn.inventoryservice.core.model.Employee;
 import com.gznznzjsn.inventoryservice.core.model.Equipment;
 import com.gznznzjsn.inventoryservice.core.model.Inventory;
@@ -16,9 +15,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EquipmentEventHandlerAxonTest {
