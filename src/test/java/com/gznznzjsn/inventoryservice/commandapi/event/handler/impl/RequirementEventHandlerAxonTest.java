@@ -15,8 +15,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RequirementEventHandlerAxonTest {
@@ -38,10 +37,7 @@ class RequirementEventHandlerAxonTest {
         var name = "shovel";
         var specialization = Specialization.CLEANER;
         var event = new RequirementCreatedEvent(
-                inventoryId,
-                requirementId,
-                specialization,
-                name
+                inventoryId, requirementId, specialization, name
         );
         var requirement = Requirement.builder()
                 .id(requirementId)
@@ -54,12 +50,12 @@ class RequirementEventHandlerAxonTest {
                 .name(name)
                 .isNew(true)
                 .build();
-        //noinspection ReactiveStreamsUnusedPublisher
-        doAnswer(invocation -> {
-            Requirement r = invocation.getArgument(0);
-            //noinspection ReactiveStreamsUnusedPublisher
-            return Mono.just(r);
-        }).when(repository).save(any(Requirement.class));
+        when(repository.save(any(Requirement.class)))
+                .thenAnswer(invocation -> {
+                    Requirement r = invocation.getArgument(0);
+                    //noinspection ReactiveStreamsUnusedPublisher
+                    return Mono.just(r);
+                });
 
         handler.on(event);
 

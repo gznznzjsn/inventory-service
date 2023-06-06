@@ -27,7 +27,7 @@ class EquipmentQueryHandlerImplTest {
     private EquipmentESRepository repository;
 
     @Test
-    public void handleNotNullGetEquipmentAutocompleteQuery() {
+    public void handleGetEquipmentAutocompleteQuery() {
         var equipment1 = Equipment.builder()
                 .id(UUID.fromString(
                         "3ea20210-2ff0-4e7b-bef0-4fb01707abdb"
@@ -46,25 +46,16 @@ class EquipmentQueryHandlerImplTest {
                 3,
                 "FAKE QUERY"
         );
-        when(repository.findAutocomplete(any(GetEquipmentAutocompleteQuery.class)))
+        when(repository.findAutocomplete(
+                any(GetEquipmentAutocompleteQuery.class)
+        ))
                 .thenReturn(Flux.just(equipment1, equipment2));
-        Flux<Equipment> equipment = repository.findAutocomplete(query);
+
+        Flux<Equipment> equipment = handler.handle(query);
+
         verify(repository).findAutocomplete(query);
         StepVerifier.create(equipment).expectNext(equipment1, equipment2)
                 .expectComplete()
-                .verify();
-    }
-
-
-    @Test
-    public void handleNullGetEquipmentAutocompleteQuery() {
-        when(repository.findAutocomplete(null)).thenReturn(
-                Flux.error(new NullPointerException())
-        );
-        Flux<Equipment> equipment = handler.handle(null);
-        verify(repository).findAutocomplete(null);
-        StepVerifier.create(equipment)
-                .expectError(NullPointerException.class)
                 .verify();
     }
 

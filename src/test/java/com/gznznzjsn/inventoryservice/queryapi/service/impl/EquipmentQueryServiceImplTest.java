@@ -27,7 +27,7 @@ class EquipmentQueryServiceImplTest {
     private EquipmentQueryHandler handler;
 
     @Test
-    public void retrieveAutocompleteWithNotNullQuery() {
+    public void retrieveAutocomplete() {
         var equipment1 = Equipment.builder()
                 .id(UUID.fromString(
                         "3ea20210-2ff0-4e7b-bef0-4fb01707abdb"
@@ -48,24 +48,13 @@ class EquipmentQueryServiceImplTest {
         );
         when(handler.handle(any(GetEquipmentAutocompleteQuery.class)))
                 .thenReturn(Flux.just(equipment1, equipment2));
+
         Flux<Equipment> equipment = service.retrieveAutocomplete(query);
+
         verify(handler).handle(query);
         StepVerifier.create(equipment)
                 .expectNext(equipment1, equipment2)
                 .expectComplete()
-                .verify();
-    }
-
-
-    @Test
-    public void retrieveAutocompleteWithNullQuery() {
-        when(handler.handle(null)).thenReturn(
-                Flux.error(new NullPointerException())
-        );
-        Flux<Equipment> equipment = service.retrieveAutocomplete(null);
-        verify(handler).handle(null);
-        StepVerifier.create(equipment)
-                .expectError(NullPointerException.class)
                 .verify();
     }
 

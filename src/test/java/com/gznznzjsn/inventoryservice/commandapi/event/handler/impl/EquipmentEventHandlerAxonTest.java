@@ -38,12 +38,7 @@ class EquipmentEventHandlerAxonTest {
         var manufacturer = "Shovelini and Co";
         var description = "Fake shovel - fake description";
         var event = new EquipmentCreatedEvent(
-                inventoryId,
-                equipmentId,
-                name,
-                manufacturer,
-                description,
-                null
+                inventoryId, equipmentId, name, manufacturer, description, null
         );
         var equipment = Equipment.builder()
                 .id(equipmentId)
@@ -58,12 +53,12 @@ class EquipmentEventHandlerAxonTest {
                 .owner(new Employee())
                 .isNew(true)
                 .build();
-        //noinspection ReactiveStreamsUnusedPublisher
-        doAnswer(invocation -> {
-            Equipment e = invocation.getArgument(0);
-            //noinspection ReactiveStreamsUnusedPublisher
-            return Mono.just(e);
-        }).when(repository).save(any(Equipment.class));
+        when(repository.save(any(Equipment.class)))
+                .thenAnswer(invocation -> {
+                    Equipment e = invocation.getArgument(0);
+                    //noinspection ReactiveStreamsUnusedPublisher
+                    return Mono.just(e);
+                });
 
         handler.on(event);
 
@@ -102,26 +97,26 @@ class EquipmentEventHandlerAxonTest {
                 )
                 .isNew(true)
                 .build();
-        //noinspection ReactiveStreamsUnusedPublisher
-        doAnswer(invocation -> {
-            UUID id = invocation.getArgument(0);
-            //noinspection ReactiveStreamsUnusedPublisher
-            return Mono.just(
-                    Equipment.builder()
-                            .id(id)
-                            .inventory(
-                                    Inventory.builder()
-                                            .id(inventoryId)
-                                            .build()
-                            )
-                            .name(name)
-                            .manufacturer(manufacturer)
-                            .description(description)
-                            .owner(new Employee())
-                            .isNew(true)
-                            .build()
-            );
-        }).when(repository).findById(any(UUID.class));
+        when(repository.findById(any(UUID.class)))
+                .thenAnswer(invocation -> {
+                    UUID id = invocation.getArgument(0);
+                    //noinspection ReactiveStreamsUnusedPublisher
+                    return Mono.just(
+                            Equipment.builder()
+                                    .id(id)
+                                    .inventory(
+                                            Inventory.builder()
+                                                    .id(inventoryId)
+                                                    .build()
+                                    )
+                                    .name(name)
+                                    .manufacturer(manufacturer)
+                                    .description(description)
+                                    .owner(new Employee())
+                                    .isNew(true)
+                                    .build()
+                    );
+                });
         //noinspection ReactiveStreamsUnusedPublisher
         doAnswer(invocation -> {
             Equipment e = invocation.getArgument(0);

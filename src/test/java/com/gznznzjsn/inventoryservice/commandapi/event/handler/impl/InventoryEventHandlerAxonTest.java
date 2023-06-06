@@ -35,12 +35,12 @@ class InventoryEventHandlerAxonTest {
                 .id(inventoryId)
                 .isNew(true)
                 .build();
-        //noinspection ReactiveStreamsUnusedPublisher
-        doAnswer(invocation -> {
-            Inventory i = invocation.getArgument(0);
-            //noinspection ReactiveStreamsUnusedPublisher
-            return Mono.just(i);
-        }).when(repository).save(any(Inventory.class));
+        when(repository.save(any(Inventory.class)))
+                .thenAnswer(invocation -> {
+                    Inventory i = invocation.getArgument(0);
+                    //noinspection ReactiveStreamsUnusedPublisher
+                    return Mono.just(i);
+                });
 
         handler.on(event);
 

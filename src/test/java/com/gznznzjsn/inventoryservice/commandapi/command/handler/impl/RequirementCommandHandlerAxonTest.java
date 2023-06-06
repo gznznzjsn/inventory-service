@@ -35,17 +35,11 @@ class RequirementCommandHandlerAxonTest {
         String name = "FAKE NAME";
         fixture.given(new InventoryCreatedEvent(inventoryId))
                 .when(new RequirementCreateCommand(
-                        inventoryId,
-                        requirementId,
-                        Specialization.CLEANER,
-                        name
+                        inventoryId, requirementId, Specialization.CLEANER, name
                 ))
                 .expectSuccessfulHandlerExecution()
                 .expectEvents(new RequirementCreatedEvent(
-                        inventoryId,
-                        requirementId,
-                        Specialization.CLEANER,
-                        name
+                        inventoryId, requirementId, Specialization.CLEANER, name
                 ))
                 .expectState(a -> {
                     assertEquals(inventoryId, a.getInventoryId());
@@ -55,9 +49,7 @@ class RequirementCommandHandlerAxonTest {
                     assertEquals(1, a.getRequirementMap().size());
                     assertEquals(
                             new RequirementEntity(
-                                    requirementId,
-                                    Specialization.CLEANER,
-                                    name
+                                    requirementId, Specialization.CLEANER, name
                             ),
                             a.getRequirementMap().get(requirementId)
                     );
