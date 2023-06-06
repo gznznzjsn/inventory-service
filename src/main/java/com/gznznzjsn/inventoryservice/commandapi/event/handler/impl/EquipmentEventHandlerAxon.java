@@ -22,26 +22,25 @@ public class EquipmentEventHandlerAxon implements EquipmentEventHandler {
     @Override
     @EventHandler
     public void on(final EquipmentCreatedEvent event) {
-        Mono.just(event)
-                .flatMap(e -> repository.save(
+        repository.save(
                         Equipment.builder()
-                                .id(e.getEquipmentId())
+                                .id(event.getEquipmentId())
                                 .owner(
                                         Employee.builder()
-                                                .id(e.getOwnerId())
+                                                .id(event.getOwnerId())
                                                 .build()
                                 )
                                 .inventory(
                                         Inventory.builder()
-                                                .id(e.getInventoryId())
+                                                .id(event.getInventoryId())
                                                 .build()
                                 )
-                                .name(e.getName())
-                                .manufacturer(e.getManufacturer())
-                                .description(e.getDescription())
+                                .name(event.getName())
+                                .manufacturer(event.getManufacturer())
+                                .description(event.getDescription())
                                 .isNew(true)
                                 .build()
-                ))
+                )
                 .subscribe();
     }
 
@@ -49,23 +48,11 @@ public class EquipmentEventHandlerAxon implements EquipmentEventHandler {
     @EventHandler
     public void on(final EquipmentOwnerAddedEvent event) {
         repository.findById(event.getEquipmentId())
-                .switchIfEmpty(Mono.error(
-                        new ResourceNotFoundException(
-                                "Equipment with id = "
-                                + event.getEquipmentId()
-                                + " not found!"
-                        )
+                .doOnNext(equipment -> equipment.setOwner(
+                        Employee.builder()
+                                .id(event.getOwnerId())
+                                .build()
                 ))
-                .map(equipmentFromRepository -> {
-                    if (event.getOwnerId() != null) {
-                        equipmentFromRepository.setOwner(
-                                Employee.builder()
-                                        .id(event.getOwnerId())
-                                        .build()
-                        );
-                    }
-                    return equipmentFromRepository;
-                })
                 .flatMap(repository::save)
                 .subscribe();
     }

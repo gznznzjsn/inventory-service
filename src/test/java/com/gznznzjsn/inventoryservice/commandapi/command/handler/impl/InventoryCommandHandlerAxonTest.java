@@ -2,7 +2,9 @@ package com.gznznzjsn.inventoryservice.commandapi.command.handler.impl;
 
 import com.gznznzjsn.inventoryservice.commandapi.aggregate.InventoryAggregate;
 import com.gznznzjsn.inventoryservice.commandapi.command.InventoryCreateCommand;
+import com.gznznzjsn.inventoryservice.commandapi.command.InventoryDeleteCommand;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
+import com.gznznzjsn.inventoryservice.commandapi.event.InventoryDeletedEvent;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.Test;
@@ -24,7 +26,7 @@ class InventoryCommandHandlerAxonTest {
     }
 
     @Test
-    void createInventory() {
+    public void createInventory() {
         UUID inventoryId =
                 UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         fixture.given()
@@ -38,6 +40,17 @@ class InventoryCommandHandlerAxonTest {
                     assertNotNull(a.getRequirementMap());
                     assertEquals(0, a.getRequirementMap().size());
                 });
+    }
+
+    @Test
+    public void deleteInventory() {
+        UUID inventoryId =
+                UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
+        fixture.given(new InventoryCreatedEvent(inventoryId))
+                .when(new InventoryDeleteCommand(inventoryId))
+                .expectSuccessfulHandlerExecution()
+                .expectEvents(new InventoryDeletedEvent(inventoryId))
+                .expectMarkedDeleted();
     }
 
 }

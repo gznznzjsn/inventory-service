@@ -36,7 +36,7 @@ class EquipmentCommandHandlerAxonTest {
     }
 
     @Test
-    void createEquipment() {
+    public void createEquipment() {
         UUID inventoryId =
                 UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         UUID equipmentId =
@@ -81,7 +81,7 @@ class EquipmentCommandHandlerAxonTest {
     }
 
     @Test
-    void assignZeroEquipmentWithAvailable() {
+    public void assignZeroEquipmentWithAvailable() {
         UUID inventoryId =
                 UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         UUID ownerId =
@@ -125,7 +125,7 @@ class EquipmentCommandHandlerAxonTest {
     }
 
     @Test
-    void assignZeroEquipmentWithUnavailable() {
+    public void assignZeroEquipmentWithUnavailable() {
         UUID inventoryId =
                 UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         UUID ownerId =
@@ -181,7 +181,7 @@ class EquipmentCommandHandlerAxonTest {
     }
 
     @Test
-    void assignMultipleEquipmentWithAvailable() {
+    public void assignMultipleEquipmentWithAvailable() {
         UUID inventoryId =
                 UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         UUID ownerId =
@@ -263,7 +263,7 @@ class EquipmentCommandHandlerAxonTest {
     }
 
     @Test
-    void assignMultipleEquipmentWithUnavailableExpectException() {
+    public void assignMultipleEquipmentWithUnavailableExpectException() {
         UUID inventoryId =
                 UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         UUID ownerId =

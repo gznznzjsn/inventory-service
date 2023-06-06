@@ -19,6 +19,6 @@ public interface EquipmentESRepository {
      * @return {@link Equipment}, relevant
      * to {@link GetEquipmentAutocompleteQuery}
      */
-    Flux<Equipment> getAutocomplete(GetEquipmentAutocompleteQuery query);
+    Flux<Equipment> findAutocomplete(GetEquipmentAutocompleteQuery query);
 
 }

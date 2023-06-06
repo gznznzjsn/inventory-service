@@ -9,7 +9,6 @@ import com.gznznzjsn.inventoryservice.core.persistence.repository.InventoryRepos
 import lombok.RequiredArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -20,11 +19,10 @@ public class InventoryEventHandlerAxon implements InventoryEventHandler {
     @Override
     @EventHandler
     public void on(final InventoryCreatedEvent event) {
-        Mono.just(event)
-                .flatMap(e -> repository.save(Inventory.builder()
+        repository.save(Inventory.builder()
                         .id(event.getInventoryId())
                         .isNew(true)
-                        .build()))
+                        .build())
                 .subscribe();
     }
 

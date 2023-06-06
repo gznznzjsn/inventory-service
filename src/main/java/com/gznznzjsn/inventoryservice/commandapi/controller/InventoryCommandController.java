@@ -57,11 +57,9 @@ public class InventoryCommandController {
      */
     @MutationMapping
     public Mono<UUID> deleteInventory(
-            @Argument UUID id
+            final @Argument UUID id
     ) {
-        return inventoryService.delete(
-                new InventoryDeleteCommand(id)
-        );
+        return inventoryService.delete(new InventoryDeleteCommand(id));
     }
 
 }
