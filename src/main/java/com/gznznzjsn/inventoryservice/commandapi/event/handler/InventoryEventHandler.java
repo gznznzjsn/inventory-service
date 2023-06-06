@@ -1,20 +1,10 @@
 package com.gznznzjsn.inventoryservice.commandapi.event.handler;
 
-
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryCreatedEvent;
 import com.gznznzjsn.inventoryservice.commandapi.event.InventoryDeletedEvent;
 import com.gznznzjsn.inventoryservice.core.model.Inventory;
-import com.gznznzjsn.inventoryservice.core.persistence.repository.InventoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.axonframework.eventhandling.EventHandler;
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
-@Component
-@RequiredArgsConstructor
-public class InventoryEventHandler {
-
-    private final InventoryRepository repository;
+public interface InventoryEventHandler {
 
     /**
      * Handles {@link InventoryCreatedEvent} and creates {@link Inventory}.
@@ -22,19 +12,8 @@ public class InventoryEventHandler {
      * @param event provides fields of {@link Inventory}, which need to be
      *              persisted
      */
-    @EventHandler
-    public void on(final InventoryCreatedEvent event) {
-        Mono.just(event)
-                .flatMap(e -> repository.save(Inventory.builder()
-                        .id(event.getInventoryId())
-                        .isNew(true)
-                        .build()))
-                .subscribe();
-    }
+    void on(InventoryCreatedEvent event);
 
-    @EventHandler
-    public void on(final InventoryDeletedEvent event) {
-        repository.deleteById(event.getInventoryId()).subscribe();
-    }
+    void on(InventoryDeletedEvent event);
 
 }
