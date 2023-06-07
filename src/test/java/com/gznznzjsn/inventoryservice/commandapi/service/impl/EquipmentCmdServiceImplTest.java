@@ -29,22 +29,22 @@ class EquipmentCmdServiceImplTest {
 
     @Test
     public void create() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
-        var equipmentId = UUID.fromString(
+        UUID equipmentId = UUID.fromString(
                 "69f9995e-8d8e-4148-a2fc-a554ce40e5b4"
         );
-        var name = "shovel";
-        var manufacturer = "Shovelini and Co";
-        var description = "Fake shovel - fake description";
+        String name = "shovel";
+        String manufacturer = "Shovelini and Co";
+        String description = "Fake shovel - fake description";
         var command = new EquipmentCreateCommand(
                 inventoryId, equipmentId, name, manufacturer, description
         );
         when(gateway.send(any(EquipmentCreateCommand.class)))
                 .thenReturn(Mono.empty());
 
-        var result = service.create(command);
+        Mono<UUID> result = service.create(command);
 
         StepVerifier.create(result)
                 .expectNextCount(0)

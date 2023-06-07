@@ -27,7 +27,7 @@ class InventoryEventHandlerAxonTest {
 
     @Test
     public void onInventoryCreatedEvent() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
         var event = new InventoryCreatedEvent(inventoryId);
@@ -49,7 +49,7 @@ class InventoryEventHandlerAxonTest {
 
     @Test
     public void onInventoryDeletedEvent() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
         var event = new InventoryDeletedEvent(inventoryId);

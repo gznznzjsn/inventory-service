@@ -28,15 +28,15 @@ class EquipmentEventHandlerAxonTest {
 
     @Test
     public void onEquipmentCreatedEvent() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
-        var equipmentId = UUID.fromString(
+        UUID equipmentId = UUID.fromString(
                 "69f9995e-8d8e-4148-a2fc-a554ce40e5b4"
         );
-        var name = "shovel";
-        var manufacturer = "Shovelini and Co";
-        var description = "Fake shovel - fake description";
+        String name = "shovel";
+        String manufacturer = "Shovelini and Co";
+        String description = "Fake shovel - fake description";
         var event = new EquipmentCreatedEvent(
                 inventoryId, equipmentId, name, manufacturer, description, null
         );
@@ -67,16 +67,16 @@ class EquipmentEventHandlerAxonTest {
 
     @Test
     public void onEquipmentOwnerAddedEvent() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
-        var equipmentId = UUID.fromString(
+        UUID equipmentId = UUID.fromString(
                 "69f9995e-8d8e-4148-a2fc-a554ce40e5b4"
         );
-        var name = "shovel";
-        var manufacturer = "Shovelini and Co";
-        var description = "Fake shovel - fake description";
-        var ownerId = UUID.fromString(
+        String  name = "shovel";
+        String  manufacturer = "Shovelini and Co";
+        String  description = "Fake shovel - fake description";
+        UUID ownerId = UUID.fromString(
                 "380aae22-0648-4eac-9794-713b74153c80"
         );
         var event = new EquipmentOwnerAddedEvent(equipmentId, ownerId);

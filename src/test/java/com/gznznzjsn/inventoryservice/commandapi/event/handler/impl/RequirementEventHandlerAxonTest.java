@@ -28,13 +28,13 @@ class RequirementEventHandlerAxonTest {
 
     @Test
     public void onRequirementCreatedEvent() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
-        var requirementId = UUID.fromString(
+        UUID requirementId = UUID.fromString(
                 "69f9995e-8d8e-4148-a2fc-a554ce40e5b4"
         );
-        var name = "shovel";
+        String name = "shovel";
         var specialization = Specialization.CLEANER;
         var event = new RequirementCreatedEvent(
                 inventoryId, requirementId, specialization, name

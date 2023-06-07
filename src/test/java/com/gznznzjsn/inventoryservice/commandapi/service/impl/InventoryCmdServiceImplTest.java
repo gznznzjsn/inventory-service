@@ -35,7 +35,7 @@ class InventoryCmdServiceImplTest {
         when(gateway.send(any(InventoryCreateCommand.class)))
                 .thenReturn(Mono.empty());
 
-        var result = service.create(command);
+        Mono<UUID> result = service.create(command);
 
         StepVerifier.create(result)
                 .expectNextCount(0)
@@ -48,14 +48,14 @@ class InventoryCmdServiceImplTest {
 
     @Test
     public void delete() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
         var command = new InventoryDeleteCommand(inventoryId);
         when(gateway.send(any(InventoryDeleteCommand.class)))
                 .thenReturn(Mono.empty());
 
-        var result = service.delete(command);
+        Mono<UUID> result = service.delete(command);
 
         StepVerifier.create(result)
                 .expectNextCount(0)

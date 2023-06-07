@@ -27,10 +27,10 @@ class RequirementCmdServiceImplTest {
 
     @Test
     public void create() {
-        var inventoryId = UUID.fromString(
+        UUID inventoryId = UUID.fromString(
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
-        var name = "shovel";
+        String name = "shovel";
         var specialization = Specialization.CLEANER;
         var command = new RequirementCreateCommand(
                 inventoryId, null, specialization, name
@@ -38,7 +38,7 @@ class RequirementCmdServiceImplTest {
         when(gateway.send(any(RequirementCreateCommand.class)))
                 .thenReturn(Mono.empty());
 
-        var result = service.create(command);
+        Mono<UUID> result = service.create(command);
 
         StepVerifier.create(result)
                 .expectNextCount(0)
