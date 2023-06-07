@@ -16,6 +16,12 @@ public interface InventoryCmdService {
      */
     Mono<UUID> create(InventoryCreateCommand cmd);
 
+    /**
+     * Deletes inventory.
+     *
+     * @param cmd stores id of inventory to be deleted
+     * @return {@link Mono} with id of deleted inventory
+     */
     Mono<UUID> delete(InventoryDeleteCommand cmd);
 
 }

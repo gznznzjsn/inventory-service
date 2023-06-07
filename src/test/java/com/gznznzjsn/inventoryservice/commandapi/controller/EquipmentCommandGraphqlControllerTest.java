@@ -61,4 +61,5 @@ class EquipmentCommandGraphqlControllerTest {
 
         verify(service).create(command);
     }
+
 }

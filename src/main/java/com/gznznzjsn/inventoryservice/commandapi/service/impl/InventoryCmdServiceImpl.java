@@ -24,7 +24,7 @@ public class InventoryCmdServiceImpl implements InventoryCmdService {
     }
 
     @Override
-    public Mono<UUID> delete(InventoryDeleteCommand cmd) {
+    public Mono<UUID> delete(final InventoryDeleteCommand cmd) {
         return gateway.send(cmd);
     }
 

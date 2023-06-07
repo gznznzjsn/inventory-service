@@ -12,8 +12,13 @@ public interface InventoryCommandHandler {
      *            {@link com.gznznzjsn.inventoryservice.core.model.Inventory}
      *            should be created
      */
-    void handle(final InventoryCreateCommand cmd);
+    void handle(InventoryCreateCommand cmd);
 
+    /**
+     * Deletes inventory.
+     *
+     * @param cmd stores id of inventory to be deleted
+     */
     void handle(InventoryDeleteCommand cmd);
 
 }

@@ -2,7 +2,6 @@ package com.gznznzjsn.inventoryservice.commandapi.command.handler;
 
 import com.gznznzjsn.common.command.EquipmentAssignCommand;
 import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
-import com.gznznzjsn.inventoryservice.core.model.exception.NotEnoughResourcesException;
 
 public interface EquipmentCommandHandler {
 
@@ -25,9 +24,6 @@ public interface EquipmentCommandHandler {
      * @param cmd provides id of target aggregate and
      *            values to set owner and its {@link
      *            com.gznznzjsn.inventoryservice.core.model.Specialization}
-     * @throws NotEnoughResourcesException if requested
-     *                                     equipment is not
-     *                                     available
      */
     void handle(EquipmentAssignCommand cmd);
 

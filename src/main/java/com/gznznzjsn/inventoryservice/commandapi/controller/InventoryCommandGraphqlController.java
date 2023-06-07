@@ -37,6 +37,7 @@ public class InventoryCommandGraphqlController {
      * With the help of {@link InventoryCmdService} deletes
      * {@link com.gznznzjsn.inventoryservice.core.model.Inventory}.
      *
+     * @param id id of inventory to be deleted
      * @return {@link Mono} with {@link UUID} of target aggregate
      */
     @MutationMapping(name = "deleteInventory")

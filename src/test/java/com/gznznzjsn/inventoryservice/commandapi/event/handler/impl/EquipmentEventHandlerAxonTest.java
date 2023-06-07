@@ -10,12 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
-
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EquipmentEventHandlerAxonTest {
@@ -53,7 +52,7 @@ class EquipmentEventHandlerAxonTest {
                 .owner(new Employee())
                 .isNew(true)
                 .build();
-        when(repository.save(any(Equipment.class)))
+        Mockito.when(repository.save(Mockito.any(Equipment.class)))
                 .thenAnswer(invocation -> {
                     Equipment e = invocation.getArgument(0);
                     //noinspection ReactiveStreamsUnusedPublisher
@@ -62,7 +61,7 @@ class EquipmentEventHandlerAxonTest {
 
         handler.on(event);
 
-        verify(repository).save(equipment);
+        Mockito.verify(repository).save(equipment);
     }
 
     @Test
@@ -97,7 +96,7 @@ class EquipmentEventHandlerAxonTest {
                 )
                 .isNew(true)
                 .build();
-        when(repository.findById(any(UUID.class)))
+        Mockito.when(repository.findById(Mockito.any(UUID.class)))
                 .thenAnswer(invocation -> {
                     UUID id = invocation.getArgument(0);
                     //noinspection ReactiveStreamsUnusedPublisher
@@ -118,16 +117,16 @@ class EquipmentEventHandlerAxonTest {
                     );
                 });
         //noinspection ReactiveStreamsUnusedPublisher
-        doAnswer(invocation -> {
+        Mockito.doAnswer(invocation -> {
             Equipment e = invocation.getArgument(0);
             //noinspection ReactiveStreamsUnusedPublisher
             return Mono.just(e);
-        }).when(repository).save(any(Equipment.class));
+        }).when(repository).save(Mockito.any(Equipment.class));
 
         handler.on(event);
 
-        verify(repository).findById(equipmentId);
-        verify(repository).save(equipment);
+        Mockito.verify(repository).findById(equipmentId);
+        Mockito.verify(repository).save(equipment);
     }
 
 }

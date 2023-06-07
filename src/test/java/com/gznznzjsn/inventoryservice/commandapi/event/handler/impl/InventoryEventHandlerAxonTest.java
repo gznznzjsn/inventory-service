@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class InventoryEventHandlerAxonTest {
@@ -35,7 +35,7 @@ class InventoryEventHandlerAxonTest {
                 .id(inventoryId)
                 .isNew(true)
                 .build();
-        when(repository.save(any(Inventory.class)))
+        Mockito.when(repository.save(any(Inventory.class)))
                 .thenAnswer(invocation -> {
                     Inventory i = invocation.getArgument(0);
                     //noinspection ReactiveStreamsUnusedPublisher
@@ -44,7 +44,7 @@ class InventoryEventHandlerAxonTest {
 
         handler.on(event);
 
-        verify(repository).save(inventory);
+        Mockito.verify(repository).save(inventory);
     }
 
     @Test
@@ -53,11 +53,12 @@ class InventoryEventHandlerAxonTest {
                 "73ba3fbf-0738-4700-94b2-04ea02cf7114"
         );
         var event = new InventoryDeletedEvent(inventoryId);
-        when(repository.deleteById(any(UUID.class))).thenReturn(Mono.empty());
+        Mockito.when(repository.deleteById(any(UUID.class)))
+                .thenReturn(Mono.empty());
 
         handler.on(event);
 
-        verify(repository).deleteById(inventoryId);
+        Mockito.verify(repository).deleteById(inventoryId);
     }
 
 }

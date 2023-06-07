@@ -62,7 +62,10 @@ class InventoryCmdServiceImplTest {
                 .verifyComplete();
         verify(gateway).send(assertArg(c -> {
             assertNotNull(c);
-            assertEquals(inventoryId, ((InventoryDeleteCommand) c).getInventoryId());
+            assertEquals(
+                    inventoryId,
+                    ((InventoryDeleteCommand) c).getInventoryId()
+            );
         }));
     }
 

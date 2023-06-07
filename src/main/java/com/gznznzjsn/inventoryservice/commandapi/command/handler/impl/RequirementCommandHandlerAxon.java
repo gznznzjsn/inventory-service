@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RequirementCommandHandlerAxon implements RequirementCommandHandler {
+public class RequirementCommandHandlerAxon
+        implements RequirementCommandHandler {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final Repository<InventoryAggregate> repository;
 
     @Override

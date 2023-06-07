@@ -1,18 +1,17 @@
 package com.gznznzjsn.inventoryservice.commandapi.event.handler;
 
 import com.gznznzjsn.inventoryservice.commandapi.event.RequirementCreatedEvent;
-import com.gznznzjsn.inventoryservice.core.model.Requirement;
-import com.gznznzjsn.inventoryservice.core.persistence.repository.RequirementRepository;
 
 public interface RequirementEventHandler {
 
     /**
      * Handles {@link RequirementCreatedEvent}, extracts values, builds
-     * {@link Requirement} and saves it to
-     * {@link RequirementRepository}.
+     * {@link com.gznznzjsn.inventoryservice.core.model.Requirement}
+     * and saves it to repository.
      *
      * @param event provides values to initialize new
-     *              {@link Requirement}
+     *              {@link
+     *              com.gznznzjsn.inventoryservice.core.model.Requirement}
      */
     void on(RequirementCreatedEvent event);
 

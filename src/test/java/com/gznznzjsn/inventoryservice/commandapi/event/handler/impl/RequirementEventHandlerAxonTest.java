@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RequirementEventHandlerAxonTest {
@@ -50,7 +50,7 @@ class RequirementEventHandlerAxonTest {
                 .name(name)
                 .isNew(true)
                 .build();
-        when(repository.save(any(Requirement.class)))
+        Mockito.when(repository.save(any(Requirement.class)))
                 .thenAnswer(invocation -> {
                     Requirement r = invocation.getArgument(0);
                     //noinspection ReactiveStreamsUnusedPublisher
@@ -59,7 +59,7 @@ class RequirementEventHandlerAxonTest {
 
         handler.on(event);
 
-        verify(repository).save(requirement);
+        Mockito.verify(repository).save(requirement);
     }
 
 }

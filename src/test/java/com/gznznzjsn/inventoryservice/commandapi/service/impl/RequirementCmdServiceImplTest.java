@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -14,7 +15,6 @@ import reactor.test.StepVerifier;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RequirementCmdServiceImplTest {
@@ -35,7 +35,7 @@ class RequirementCmdServiceImplTest {
         var command = new RequirementCreateCommand(
                 inventoryId, null, specialization, name
         );
-        when(gateway.send(any(RequirementCreateCommand.class)))
+        Mockito.when(gateway.send(Mockito.any(RequirementCreateCommand.class)))
                 .thenReturn(Mono.empty());
 
         Mono<UUID> result = service.create(command);
@@ -43,7 +43,7 @@ class RequirementCmdServiceImplTest {
         StepVerifier.create(result)
                 .expectNextCount(0)
                 .verifyComplete();
-        verify(gateway).send(assertArg(c -> {
+        Mockito.verify(gateway).send(Mockito.assertArg(c -> {
             assertNotNull(c);
             assertNotNull(((RequirementCreateCommand) c).getRequirementId());
         }));

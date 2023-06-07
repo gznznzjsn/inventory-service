@@ -133,5 +133,4 @@ class EquipmentQueryGraphqlControllerTest {
         verify(mapper, times(2)).toDto(any(Equipment.class));
     }
 
-
 }

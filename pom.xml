@@ -209,7 +209,8 @@ SOFTWARE.
                                         </limit>
                                     </limits>
                                     <includes>
-                                        <include>com.gznznzjsn.inventoryservice</include>
+                                        <include>com.gznznzjsn.inventoryservice.commandapi</include>
+                                        <include>com.gznznzjsn.inventoryservice.queryapi</include>
                                     </includes>
                                 </rule>
                             </rules>
