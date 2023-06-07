@@ -23,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EquipmentCommandHandlerAxon implements EquipmentCommandHandler {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final Repository<InventoryAggregate> repository;
 
     @Override
