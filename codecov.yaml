@@ -9,7 +9,8 @@ coverage:
         flags:
           - unit
         paths:
-          - "src/main/java/com/gznznzjsn/inventoryservice"
+          - "src/main/java/com/gznznzjsn/inventoryservice/queryapi"
+          - "src/main/java/com/gznznzjsn/inventoryservice/commandapi"
         branches:
           - main
         if_ci_failed: error
