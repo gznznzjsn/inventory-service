@@ -5,6 +5,7 @@ import com.gznznzjsn.inventoryservice.commandapi.command.EquipmentCreateCommand;
 import com.gznznzjsn.inventoryservice.commandapi.service.EquipmentCmdService;
 import com.gznznzjsn.inventoryservice.core.web.dto.EquipmentDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -31,6 +32,7 @@ public class EquipmentCommandRestController {
      * @return {@link Mono} with {@link UUID} of target aggregate
      */
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<UUID> create(
             final @RequestBody EquipmentDto dto,
             final @PathVariable UUID inventoryId

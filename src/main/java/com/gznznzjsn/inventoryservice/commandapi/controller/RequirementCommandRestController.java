@@ -5,6 +5,7 @@ import com.gznznzjsn.inventoryservice.commandapi.command.RequirementCreateComman
 import com.gznznzjsn.inventoryservice.commandapi.service.RequirementCmdService;
 import com.gznznzjsn.inventoryservice.core.web.dto.RequirementDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -28,6 +29,7 @@ public class RequirementCommandRestController {
      * @return {@link Mono} with {@link UUID} of target aggregate
      */
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<UUID> create(
             final @RequestBody RequirementDto dto,
             final @PathVariable UUID inventoryId
