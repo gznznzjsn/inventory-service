@@ -70,6 +70,10 @@ SOFTWARE.
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
@@ -157,6 +161,11 @@ SOFTWARE.
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.graphql</groupId>
+            <artifactId>spring-graphql-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -200,7 +209,8 @@ SOFTWARE.
                                         </limit>
                                     </limits>
                                     <includes>
-                                        <include>com.gznznzjsn.inventoryservice.commandapi.aggregate</include>
+                                        <include>com.gznznzjsn.inventoryservice.commandapi</include>
+                                        <include>com.gznznzjsn.inventoryservice.queryapi</include>
                                     </includes>
                                 </rule>
                             </rules>

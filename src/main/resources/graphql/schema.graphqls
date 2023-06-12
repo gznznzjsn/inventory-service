@@ -1,0 +1,24 @@
+type Query {
+    getEquipmentWithAutocomplete(
+        inventoryId: String
+        from: Int
+        size: Int
+        query: String
+    ): [Equipment!]
+}
+
+type Mutation {
+    createEquipment(
+        name: String!
+        manufacturer: String!
+        description: String!
+        inventoryId: ID!
+    ): Boolean
+    createRequirement(
+        name: String!
+        specialization: Specialization!
+        inventoryId: ID!
+    ): Boolean
+    createInventory: Boolean
+    deleteInventory(id: ID!): Boolean
+}

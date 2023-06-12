@@ -41,7 +41,7 @@ public class EquipmentESRepositoryImpl implements EquipmentESRepository {
 
     @Override
     @SneakyThrows
-    public Flux<Equipment> getAutocomplete(
+    public Flux<Equipment> findAutocomplete(
             final GetEquipmentAutocompleteQuery query
     ) {
         Query nameQuery = Query.of(q -> q

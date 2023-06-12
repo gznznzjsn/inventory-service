@@ -30,7 +30,7 @@ public class EquipmentDeserializer extends StdDeserializer<Equipment> {
     ) throws IOException {
         ObjectCodec codec = parser.getCodec();
         JsonNode node = codec.readTree(parser);
-        UUID employeeId = node.get("owner_id") == null
+        UUID employeeId = node.get("owner_id").isNull()
                 ? null
                 : UUID.fromString(node.get("owner_id").asText());
         return Equipment.builder()

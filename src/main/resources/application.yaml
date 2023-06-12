@@ -18,6 +18,9 @@ spring:
     url: ${APP_JDBC_URL}
     password: ${APP_DATASOURCE_PASSWORD}
     user: ${APP_DATASOURCE_USERNAME}
+  graphql:
+    graphiql:
+      enabled: true
 server:
   port: 8080
 
